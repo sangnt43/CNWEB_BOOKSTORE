@@ -1,0 +1,1 @@
+Vue.component('shop-cart', require('./components/shop-cart.vue').default);

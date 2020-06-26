@@ -1,0 +1,1 @@
+Vue.component('scroll-top', require('./components/scroll-top.vue').default);

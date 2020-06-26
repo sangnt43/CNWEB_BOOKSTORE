@@ -1,0 +1,1 @@
+Vue.component('recommend', require('./components/recommend.vue').default);
