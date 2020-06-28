@@ -9,6 +9,8 @@ class Shop extends My_Controller
         $this->__LAYOUT__ = "main";
 
         $this->load->Model("Book_Model", "repo");
+
+        $this->clear_breadcrum("Tất cả", "all");
     }
 
     public function index()
@@ -18,24 +20,48 @@ class Shop extends My_Controller
 
         $this->view("index", $data);
     }
-    public function category($seo)
+    public function getAll()
     {
-        $data["recommendes"] = $this->repo->getRecommends();
+        $page = $this->input->post("page") != "" ? $this->input->post("page") : 1;
 
-        $data['books'] = $this->repo->getByCategory($seo);
-
-        $this->push_breadcrum('category');
+        $data = $this->repo->page($page);
 
         if (isset(getallheaders()['HTTP_X_REQUESTED_WITH'])) {
             return $this->response($data);
         } else {
+            $data["recommendes"] = $this->repo->getRecommends();
+
+            return $this->view("index", $data);
+        }
+    }
+    public function category($seo)
+    {
+        $this->load->model("BookCategory_Model", "category");
+
+        $page = $this->input->post("page") != "" ? $this->input->post("page") : 1;
+
+        $data["category"] = $this->category->getBySeo($seo);
+
+        $this->push_breadcrum($data["category"]["Name"]);
+
+        $data = array_merge($data, $this->repo->getByCategory($data["category"]["Id"], $page));
+
+        if (isset(getallheaders()['HTTP_X_REQUESTED_WITH'])) {
+            return $this->response($data);
+        } else {
+            $data["recommendes"] = $this->repo->getRecommends();
+
             return $this->view("index", $data);
         }
     }
     public function get($category, $seo)
     {
         $this->load->model("BookCategory_Model", "Categories");
+
         $data["category"] = $this->Categories->getBySeo($category);
+
+        $this->push_breadcrum($data["category"]["Name"], $data["category"]["Seo"]);
+
         $data["recommendes"] = $this->repo->getRecommends();
 
         if (isset($data["category"]))

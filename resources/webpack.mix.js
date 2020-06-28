@@ -4,7 +4,8 @@ mix.setPublicPath('../');
 
 // mix.js('form_file', 'to_dir');
 
-mix.js('js/scroll-top.js', '../publics/vue/scroll-top.js');
-mix.js('js/recommend.js', '../publics/vue/recommend.js');
-mix.js('js/shop-item.js', '../publics/vue/shop-item.js');
-mix.js('js/shop-cart.js', '../publics/vue/shop-cart.js');
+// mix.js('js/scroll-top.js', '../public/vue/scroll-top.js');
+// mix.js('js/recommend.js', '../public/vue/recommend.js');
+// mix.js('js/shop-item.js', '../public/vue/shop-item.js');
+// mix.js('js/shop-cart.js', '../public/vue/shop-cart.js');
+mix.js('js/pagination.js', '../public/vue/pagination.js');

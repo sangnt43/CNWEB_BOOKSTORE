@@ -20,9 +20,10 @@
 <?php if (isset($_js_) && is_file(VIEWPATH . explode(".", $_js_)[0] . ".php")) $this->load->view($_js_) ?>
 <script>
     window.addEventListener("DOMContentLoaded", function() {
-        if (typeof vue_js != 'undefined') {
-            new Vue(vue_js), vue_js = undefined;
+        if (typeof vue_js == 'undefined') vue_js = {
+            el: "#embed"
         }
+        new Vue(vue_js), vue_js = undefined;
     })
 </script>
 

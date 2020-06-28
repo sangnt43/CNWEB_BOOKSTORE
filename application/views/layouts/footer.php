@@ -19,19 +19,19 @@
                 <div class="navigation">
                     <h4>Navigation</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="terms-conditions.html">Terms</a></li>
-                        <li><a href="products.html">Products</a></li>
+                        <li><a href="<?= base_url() ?>">Home</a></li>
+                        <li><a href="<?= base_url("about") ?>">About Us</a></li>
+                        <li><a href="<?= base_url("policy") ?>">Privacy Policy</a></li>
+                        <li><a href="<?= base_url("terms-condition") ?>">Terms</a></li>
+                        <li><a href="<?= base_url("all") ?>">Products</a></li>
                     </ul>
                 </div>
                 <div class="navigation">
                     <h4>Help</h4>
                     <ul>
-                        <li><a href="">Shipping & Returns</a></li>
-                        <li><a href="privacy-policy.html">Privacy</a></li>
-                        <li><a href="faq.html">FAQ’s</a></li>
+                        <li><a href="<?= base_url("shipping-return") ?>">Shipping & Returns</a></li>
+                        <li><a href="<?= base_url("policy") ?>">Privacy</a></li>
+                        <li><a href="<?= base_url("faq") ?>">FAQ’s</a></li>
                     </ul>
                 </div>
             </div>
@@ -39,16 +39,16 @@
                 <div class="form">
                     <h3>Quick Contact us</h3>
                     <h6>We are now offering some good discount on selected books go and shop them</h6>
-                    <form>
+                    <form method="POST" action="<?= base_url("contact") ?>">
                         <div class="row">
                             <div class="col-md-6">
-                                <input placeholder="Name" required>
+                                <input placeholder="Name" name="name" required>
                             </div>
                             <div class="col-md-6">
-                                <input type="email" placeholder="Email" required>
+                                <input type="email" placeholder="Email" name="email" required>
                             </div>
                             <div class="col-md-12">
-                                <textarea placeholder="Messege"></textarea>
+                                <textarea placeholder="Messege" name="message"></textarea>
                             </div>
                             <div class="col-md-12">
                                 <button class="btn black">Alright, Submit</button>

@@ -18,4 +18,15 @@ class Home extends My_Controller
 
         $this->view("index", $data);
     }
+    public function getContact()
+    {
+        $name = $this->input->post("name");
+        $email = $this->input->post("email");
+        $message = $this->input->post("message");
+
+        if ($name == "" || $email == "" || $message == "") show_404();
+
+        $this->load->model("Contact_Mode", "contact");
+        $this->contact->addContact($name, $email, $message);
+    }
 }

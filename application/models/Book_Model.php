@@ -2,35 +2,42 @@
 
 class Book_Model extends My_Model
 {
+
+    private $item_per_page = 2;
+
     public function __construct()
     {
         parent::__construct("books");
     }
-    private function __mapImage($img)
+    private function _mapImage($img)
     {
-        return base_url("publics/$img");
+        return base_url("public/$img");
     }
-    private function _mapData($data, $isShort = true)
+    private function _map($data, $isShort = true)
     {
         if (!isset($data)) return;
-        
+
         if (isset($data['Id'])) {
-            $data['Avatar'] = $this->__mapImage($data['Avatar']);
+            $data['Avatar'] = $this->_mapImage($data['Avatar']);
             $data['Seo'] = base_url("$data[Seo]");
-            if (!empty($data['Images']))
-                $data['Images'] = array_map(array($this, "__mapImage"), explode(',', $data['Images']));
-            if ($isShort && strlen($data['Name']) > 20) {
-                $data['Name'] = substr($data['Name'], 0, 20) . "...";
+            if ($isShort == TRUE) {
+                unset($data['Images']);
+                unset($data['Info_Auth']);
+                unset($data['Info_PublisherId']);
+                if (strlen($data['Name']) > 20)
+                    $data['Name'] = substr($data['Name'], 0, 20) . "...";
             }
+            if (!empty($data['Images']))
+                $data['Images'] = array_map(array($this, "_mapImage"), explode(',', $data['Images']));
         } else {
-            $data = array_map(array($this, "_mapData"), $data);
+            $data = array_map(array($this, "_map"), $data);
         }
         return $data;
     }
     public function getRecommends()
     {
         // return $;
-        return $this->_mapData(
+        return $this->_map(
             $this->db
                 ->limit(5, 0)
                 ->order_by("Count_Buy", "DESC")
@@ -42,9 +49,9 @@ class Book_Model extends My_Model
     public function getTopBuy()
     {
         return
-            $this->_mapData(
+            $this->_map(
                 $this->db
-                    ->limit(20, 0)
+                    ->limit($this->item_per_page, 0)
                     ->order_by("Count_Buy")
                     ->get("books")
                     ->result_array()
@@ -54,11 +61,12 @@ class Book_Model extends My_Model
     public function get(string $id = null)
     {
         if ($id == null)
-            return $this->_mapData(
-                $this->db->get($this->table)->result_array()
+            return $this->_map(
+                $this->db->get($this->table)->result_array(),
+                true
             );
         return
-            $this->_mapData(
+            $this->_map(
                 $this->db
                     ->select([
                         "books.*",
@@ -75,15 +83,24 @@ class Book_Model extends My_Model
             );
     }
 
+    public function countPage($query = null)
+    {
+        if ($query == null)
+            return ceil($this->db->from($this->table)->count_all_results() / $this->item_per_page);
+        return ceil($query->count_all_results() / $this->item_per_page);
+    }
+
     public function page($page = 1)
     {
-        return
-            $this->_mapData(
-                $this->db
-                    ->limit(20, ($page - 1) * 20)
-                    ->get($this->table)
-                    ->result_array()
-            );
+        return [
+            "totalPage" => $this->countPage($this->db->from($this->table)),
+            "books" => $this->_map(
+                $this->db->from($this->table)
+                    ->order_by("Id", "Desc")
+                    ->limit($this->item_per_page, ($page - 1) * $this->item_per_page)
+                    ->get()->result_array()
+            )
+        ];
     }
 
     public function search($key, $limit = null)
@@ -91,28 +108,35 @@ class Book_Model extends My_Model
         $data = $this->db;
         if ($limit != null) $data = $data->limit($limit, 0);
 
-        return $this->_mapData(
+        return $this->_map(
             $data->get_where("books", "Name like N'%$key%'")
         );
     }
 
-    public function getByCategory($categoryId)
+    public function getByCategory($categoryId, $page = 1)
     {
-        return
-            $this->_mapData(
+        return [
+            "totalPage" => $this->countPage(
+                $this->db->from($this->table)->where(["BookCategoryId" => $categoryId])
+            ),
+            "books" => $this->_map(
                 $this->db
+                    ->limit($this->item_per_page, ($page - 1) * $this->item_per_page)
+                    ->order_by("Id", "Desc")
                     ->get_where($this->table, ["BookCategoryId" => $categoryId])
                     ->result_array()
-            );
+            )
+        ];
     }
 
     public function getBySeo($categoryId, $seo)
     {
         return
-            $this->_mapData(
+            $this->_map(
                 $this->db
                     ->get_where($this->table, ["Seo" => $seo, "BookCategoryId" => $categoryId])
-                    ->row_array()
+                    ->row_array(),
+                false
             );
     }
 }

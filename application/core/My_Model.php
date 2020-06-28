@@ -12,9 +12,9 @@ class My_Model extends CI_Model
     public function get(string $id = null)
     {
         if ($id == null)
-            return $this->db->get("books")->result_array();
+            return $this->db->get($this->table)->result_array();
         return $this->db
-            ->get_where("books", ["books.Id" => $id])->row_array();
+            ->get_where("$this->table", ["$this->table.Id" => $id])->row_array();
     }
 
     public function create($data)

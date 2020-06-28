@@ -1,4 +1,4 @@
-<script src="<?= base_url("publics/vue/recommend.js") ?>"></script>
+<script src="<?= base_url("public/vue/recommend.js") ?>"></script>
 
 <script>
     var vue_js = {

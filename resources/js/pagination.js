@@ -1,0 +1,1 @@
+Vue.component('pagination', require('./components/pagination.vue').default);
