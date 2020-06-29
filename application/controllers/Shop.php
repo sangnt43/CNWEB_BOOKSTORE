@@ -26,7 +26,7 @@ class Shop extends My_Controller
 
         $data = $this->repo->page($page);
 
-        if (isset(getallheaders()['HTTP_X_REQUESTED_WITH'])) {
+        if (IsAjax()) {
             return $this->response($data);
         } else {
             $data["recommendes"] = $this->repo->getRecommends();
@@ -45,7 +45,7 @@ class Shop extends My_Controller
 
         $data = array_merge($data, $this->repo->getByCategory($data["category"]["Id"], $page));
 
-        if (isset(getallheaders()['HTTP_X_REQUESTED_WITH'])) {
+        if (IsAjax()) {
             return $this->response($data);
         } else {
             $data["recommendes"] = $this->repo->getRecommends();
@@ -61,8 +61,6 @@ class Shop extends My_Controller
 
         $this->push_breadcrum($data["category"]["Name"], $data["category"]["Seo"]);
 
-        $data["recommendes"] = $this->repo->getRecommends();
-
         if (isset($data["category"]))
             $data['book'] = $this->repo->getBySeo($data["category"]["Id"], "$category/$seo");
 
@@ -70,10 +68,27 @@ class Shop extends My_Controller
 
         $this->push_breadcrum($data['book']['Name']);
 
-        if (isset(getallheaders()['HTTP_X_REQUESTED_WITH'])) {
+        if (IsAjax()) {
             return $this->response($data);
         } else {
+            $data["recommendes"] = $this->repo->getRecommends();
+
             return $this->view("book", $data);
+        }
+    }
+    public function search()
+    {
+        $key = $this->input->get("key");
+
+        if (IsAjax()) {
+            $data['books'] = $this->repo->search($key, 1, 5);
+
+            return $this->response($data);
+        } else {
+            $page = $this->input->post("page") != "" ? $this->input->post("page") : 1;
+            $data = $this->repo->search($key, $page);
+
+            return $this->view("search", $data);
         }
     }
 }

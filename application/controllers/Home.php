@@ -18,7 +18,7 @@ class Home extends My_Controller
 
         $this->view("index", $data);
     }
-    public function getContact()
+    public function Contact()
     {
         $name = $this->input->post("name");
         $email = $this->input->post("email");
@@ -26,7 +26,9 @@ class Home extends My_Controller
 
         if ($name == "" || $email == "" || $message == "") show_404();
 
-        $this->load->model("Contact_Mode", "contact");
+        $this->load->model("Contact_Model", "contact");
         $this->contact->addContact($name, $email, $message);
+
+        redirect(base_url());
     }
 }

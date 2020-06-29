@@ -12,6 +12,13 @@ if (!function_exists("debug")) {
     }
 }
 
+if (!function_exists("IsAjax")) {
+    function IsAjax()
+    {
+        return isset(getallheaders()['HTTP_X_REQUESTED_WITH']);
+    }
+}
+
 if (!function_exists("ObjectId")) {
     function ObjectId()
     {

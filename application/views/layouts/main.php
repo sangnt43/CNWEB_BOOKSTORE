@@ -20,6 +20,13 @@
 <?php if (isset($_js_) && is_file(VIEWPATH . explode(".", $_js_)[0] . ".php")) $this->load->view($_js_) ?>
 <script>
     window.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("input[type='search']").addEventListener("keypress", e => {
+            if (_time) clearTimeout(_time);
+            var _time = setTimeout(async () => {
+                let data = await call_api(`<?= base_url() ?>search?key=${encodeURI(e.value)}`);
+                console.log(data.books);
+            }, 300);
+        })
         if (typeof vue_js == 'undefined') vue_js = {
             el: "#embed"
         }

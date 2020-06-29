@@ -23,9 +23,9 @@
         mounted() {
             document.querySelector("#category").addEventListener("click", async e => {
                 e.preventDefault();
-                if (e.target.tagName != "A") return;
-
                 let seo = e.target.dataset["href"];
+
+                if (e.target.tagName != "A" || `<?= base_url() ?>seo` == window.location.href) return;
 
                 if (!this.$data._slide[seo]) {
                     let _ = await call_next_category(`<?= base_url() ?>${seo}`);
@@ -39,10 +39,13 @@
                             1: _.books
                         };
                 }
+
                 this.currentCategory = seo;
                 this.currentPage = 1;
                 this.books = this._books ? this._books[1] : null;
                 change_breadcrumb(this.current["breadcrumb"]);
+
+                window.history.pushState("", "", `<?= base_url() ?>${seo}`);
             })
         },
         computed: {

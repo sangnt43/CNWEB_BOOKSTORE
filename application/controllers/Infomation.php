@@ -49,7 +49,6 @@ class Infomation extends My_Controller
 
         $this->push_breadcrum("Contact");
 
-
         $this->view("index", $data);
     }
 

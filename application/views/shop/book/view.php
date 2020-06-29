@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-6 slider-sec">
                 <!-- main slider carousel -->
-                <div id="myCarousel" class="carousel slide" style="min-height: 560px">
+                <div id="myCarousel" class="carousel slide" style="min-height: 600px">
                     <!-- main slider carousel items -->
                     <div class="carousel-inner">
                         <div class="item carousel-item" :class="index == 0? 'active': ''" v-for="(image,index) in book.Images" :data-slide-number="index">

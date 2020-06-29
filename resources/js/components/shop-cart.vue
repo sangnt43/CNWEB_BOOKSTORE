@@ -28,16 +28,16 @@ export default {
   },
   methods: {
     push(item, quantity = 1) {
-      if (item["id"]) {
-        let _ = this.cart.find(x => x.id == item["id"]);
+      if (item["Id"]) {
+        let _ = this.cart.find(x => x.id == item["Id"]);
         if (_) _["quantity"] += quantity;
         else
           this.cart.push({
-            id: item["id"],
-            seo: item["seo"],
+            id: item["Id"],
+            seo: item["Seo"],
             quantity: quantity
           });
-        localStorage.setItem("cardItem",JSON.stringify(this.cart));
+        localStorage.setItem("cardItem", JSON.stringify(this.cart));
       }
     },
     updateCart() {

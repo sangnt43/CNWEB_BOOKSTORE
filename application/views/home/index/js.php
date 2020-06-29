@@ -6,7 +6,8 @@
         el: "#embed",
         data: {
             isDrag: false,
-            top_buy: <?= json_encode($top_buy) ?>
+            top_buy: <?= json_encode($top_buy) ?>,
+            recommendes: <?= json_encode($recommendes) ?>
         },
         computed: {
             cartCount() {

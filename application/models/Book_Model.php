@@ -103,14 +103,24 @@ class Book_Model extends My_Model
         ];
     }
 
-    public function search($key, $limit = null)
+    public function search($key, $page = 1, $limit = null)
     {
         $data = $this->db;
-        if ($limit != null) $data = $data->limit($limit, 0);
+        if ($limit != null) {
+            return  $this->_map(
+                $data->limit($limit, 0)->get_where($this->table, "Name like N'%$key%'")->result_array()
+            );
+        }
 
-        return $this->_map(
-            $data->get_where("books", "Name like N'%$key%'")
-        );
+        return [
+            "totalPage" =>  $this->countPage($this->db->from($this->table)->where("Name like N'%$key%'")),
+            "books" => $this->_map(
+                $this->db
+                    ->limit($this->item_per_page, ($page - 1) * $this->item_per_page)
+                    ->get_where($this->table, "Name like N'%$key%'")
+                    ->result_array()
+            )
+        ];
     }
 
     public function getByCategory($categoryId, $page = 1)

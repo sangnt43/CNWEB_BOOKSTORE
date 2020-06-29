@@ -8,4 +8,4 @@ mix.setPublicPath('../');
 // mix.js('js/recommend.js', '../public/vue/recommend.js');
 // mix.js('js/shop-item.js', '../public/vue/shop-item.js');
 // mix.js('js/shop-cart.js', '../public/vue/shop-cart.js');
-mix.js('js/pagination.js', '../public/vue/pagination.js');
+// mix.js('js/pagination.js', '../public/vue/pagination.js');

@@ -8,6 +8,6 @@ class Infomation_Model extends My_Model
     }
     public function get(?string $id = null)
     {
-        return $this->db->get_where($this->table, ["id" => $id])->row_array();
+        return $this->db->get_where($this->table, ["Id" => $id])->row_array();
     }
 }

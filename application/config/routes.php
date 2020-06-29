@@ -10,13 +10,16 @@ $route['changePassword'] = "Auth/changePassword";
 $route['register'] = "Auth/register";
 $route['forget'] = "Auth/forget";
 
+$route['search'] = "Shop/search";
+
 $route['about'] = "Infomation/about";
 $route['faq'] = "Infomation/faq";
 $route['policy'] = "Infomation/policy";
-$route['contact'] = "Infomation/contact";
+$route['contact'] = function () {
+    return $_SERVER['REQUEST_METHOD'] == "POST" ? "Home/Contact" : "Infomation/contact";
+};
 $route['shipping-return'] = "Infomation/shippingReturn";
 $route['terms-condition'] = "Infomation/termsCondition";
-
 
 $route['all'] = "Shop/getAll";
 $route['(:any)'] = "Shop/category/$1";

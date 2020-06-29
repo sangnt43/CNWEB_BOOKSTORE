@@ -1,22 +1,21 @@
-const call_next_page = function(page = 1) {
-    let _ = new FormData();
-    _.append("page", page);
-    return fetch("", {
-        method: "POST",
-        headers: {
-            "HTTP_X_REQUESTED_WITH": "AJAX"
-        },
-        body: _
-    }).then(b => b.json());
-}
-
-const call_next_category = function(url) {
+const call_api = function(url, form = null) {
     return fetch(url, {
         method: "POST",
         headers: {
             "HTTP_X_REQUESTED_WITH": "AJAX"
-        }
+        },
+        body: form
     }).then(b => b.json());
+}
+
+const call_next_page = function(page = 1) {
+    let _ = new FormData();
+    _.append("page", page);
+    return call_api("", _);
+}
+
+const call_next_category = function(url) {
+    return call_api(url);
 }
 
 const create_node = function(htmlString) {
