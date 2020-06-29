@@ -1,7 +1,7 @@
 <template>
   <nav>
     <ul class="pagination justify-content-center">
-      <li class="page-item" v-if="currentPage!=1">
+      <li class="page-item" v-if="currentPage != 1">
         <a class="page-link" @click.prevent="currentPage--" href="#" tabindex="-1">
           <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </a>
@@ -16,7 +16,7 @@
         <a class="page-link" @click.prevent="currentPage = index" href="#">{{index}}</a>
       </li>
 
-      <li class="page-item" v-if="currentPage != totalPage">
+      <li class="page-item" v-if="currentPage != totalPage && totalPage != 0">
         <a class="page-link" @click.prevent="currentPage++" href="#">
           <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </a>
@@ -31,6 +31,9 @@ export default {
   props: {
     totalPage: {
       default: 1
+    },
+    page: {
+      default: 1
     }
   },
   data() {
@@ -39,8 +42,11 @@ export default {
     };
   },
   watch: {
+    page(value) {
+      this.currentPage = value;
+    },
     currentPage(value) {
-      this.$emit("click", value);
+      this.$emit("update:page", value);
     }
   }
 };

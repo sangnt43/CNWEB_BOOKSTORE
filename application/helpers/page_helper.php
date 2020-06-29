@@ -15,6 +15,15 @@ if (!function_exists("getBanner")) {
 
         $data['banners'] = $ci->model->get();
 
-        $ci->load->view("layouts/banner.php",$data);
+        $ci->load->view("layouts/banner.php", $data);
+    }
+}
+
+if (!function_exists("getAllCategories")) {
+    function getAllCategories()
+    {
+        $ci = get_instance();
+        $ci->load->model("BookCategory_Model", "model");
+        return $ci->model->get();
     }
 }

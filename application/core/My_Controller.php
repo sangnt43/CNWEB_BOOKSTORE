@@ -29,7 +29,7 @@ class My_Controller extends CI_Controller
             $this->session->set_flashdata('_navi_', join('_', [$this->__NAVI__, strtolower($view)]));
 
         if (!empty($this->__BREADCRUM__))
-            $data['breadcrumbs'] = $this->__BREADCRUM__;
+            $data['breadcrumb'] = $this->__BREADCRUM__;
 
         if (isset($this->__FOLDER__)) $view = "$this->__FOLDER__/$view";
 
@@ -48,7 +48,7 @@ class My_Controller extends CI_Controller
         $data['_title_'] = $this->__TITLE__;
 
         if (!empty($this->__BREADCRUM__))
-            $data['breadcrumbs'] = $this->__BREADCRUM__;
+            $data['breadcrumb'] = $this->load->view("layouts/breadcrumb", ["breadcrumb" => $this->__BREADCRUM__],true);
 
         echo json_encode($data);
     }

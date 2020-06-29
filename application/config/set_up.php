@@ -5,7 +5,7 @@ $protocol =
     'https://' :
     'http://';
 
-$config['base_url'] = "";
+$config['base_url'] = "http://localhost/CNWEB/";
 $config['database'] = "";
 $config['username'] = "";
 $config['password'] = "";

@@ -30,7 +30,6 @@ class Shop extends My_Controller
             return $this->response($data);
         } else {
             $data["recommendes"] = $this->repo->getRecommends();
-
             return $this->view("index", $data);
         }
     }

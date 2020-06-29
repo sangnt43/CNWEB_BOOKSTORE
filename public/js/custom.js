@@ -10,6 +10,26 @@ const call_next_page = function(page = 1) {
     }).then(b => b.json());
 }
 
+const call_next_category = function(url) {
+    return fetch(url, {
+        method: "POST",
+        headers: {
+            "HTTP_X_REQUESTED_WITH": "AJAX"
+        }
+    }).then(b => b.json());
+}
+
+const create_node = function(htmlString) {
+    var t = document.createElement('template');
+    t.innerHTML = htmlString;
+    return t.content.cloneNode(true);
+}
+
+const change_breadcrumb = function(htmlString) {
+    var _node = create_node(htmlString);
+    document.querySelector(".breadcrumb").replaceWith(_node);
+}
+
 $(document).ready(function() {
     $("#owl-demo").owlCarousel({
         navigation: true, // Show next and prev buttons
