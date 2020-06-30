@@ -4,6 +4,7 @@
 <script src="<?= base_url("public/js/custom.js") ?>"></script>
 <script src="<?= base_url("public/vue/scroll-top.js") ?>"></script>
 <script src="<?= base_url("public/vue/shop-cart.js") ?>"></script>
+<script src="<?= base_url("public/vue/shop-search.js") ?>"></script>
 <script src="<?= base_url("public/vendors/notify.min.js") ?>"></script>
 
 <script>

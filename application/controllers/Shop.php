@@ -80,13 +80,19 @@ class Shop extends My_Controller
     {
         $key = $this->input->get("key");
 
+        $this->clear_breadcrum("Tìm kiếm: $key");
+
+        $page = $this->input->post("page");
+
         if (IsAjax()) {
-            $data['books'] = $this->repo->search($key, 1, 5);
+            if ($page == "")
+                $data['books'] = $this->repo->search($key, 1, 5);
+            else
+                $data = $this->repo->search($key, $page);
 
             return $this->response($data);
         } else {
-            $page = $this->input->post("page") != "" ? $this->input->post("page") : 1;
-            $data = $this->repo->search($key, $page);
+            $data = $this->repo->search($key, 1);
 
             return $this->view("search", $data);
         }

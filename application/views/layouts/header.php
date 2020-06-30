@@ -32,10 +32,7 @@
                 <div class="break"></div>
                 <div style="display: contents;">
                     <shop-cart ref="shop-cart" class="cart my-2 my-lg-0"></shop-cart>
-                    <form class="form-inline my-2 my-lg-0 search-form">
-                        <input class="form-control" type="search" placeholder="Search here..." aria-label="Search">
-                        <span class="fa fa-search"></span>
-                    </form>
+                    <shop-search href="<?= base_url("search") ?>" @fetch-value=""></shop-search>
                 </div>
             </nav>
         </div>

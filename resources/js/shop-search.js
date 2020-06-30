@@ -1,0 +1,1 @@
+Vue.component('shop-search', require('./components/shop-search.vue').default);

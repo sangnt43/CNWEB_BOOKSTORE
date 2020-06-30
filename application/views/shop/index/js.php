@@ -20,34 +20,6 @@
             }
             this._books[1] = this.books;
         },
-        mounted() {
-            document.querySelector("#category").addEventListener("click", async e => {
-                e.preventDefault();
-                let seo = e.target.dataset["href"];
-
-                if (e.target.tagName != "A" || `<?= base_url() ?>seo` == window.location.href) return;
-
-                if (!this.$data._slide[seo]) {
-                    let _ = await call_next_category(`<?= base_url() ?>${seo}`);
-                    this.$data._slide[seo] = {
-                        breadcrumb: _["breadcrumb"],
-                        pageTitle: _["category"]["Name"],
-                        totalPage: _["totalPage"],
-                    };
-                    if (_.books.length)
-                        this.$data._slide[seo]["_books"] = {
-                            1: _.books
-                        };
-                }
-
-                this.currentCategory = seo;
-                this.currentPage = 1;
-                this.books = this._books ? this._books[1] : null;
-                change_breadcrumb(this.current["breadcrumb"]);
-
-                window.history.pushState("", "", `<?= base_url() ?>${seo}`);
-            })
-        },
         computed: {
             "current"() {
                 if (!this.$data._slide[this.currentCategory]) return null;
@@ -68,10 +40,41 @@
         },
         watch: {
             "currentPage": async function(value) {
-                this.currentPage = value;
                 if (!this._books[value])
                     this._books[value] = (await call_next_page(value))['books'];
                 this.books = this._books[value];
+            },
+            "currentCategory": async function() {
+                await this.changeCategory();
+            }
+        },
+        methods: {
+            async changeCategory() {
+                let value = this.currentCategory;
+
+                if (!this.$data._slide[value]) {
+                    let _ = await call_next_category(`<?= base_url() ?>${value}`);
+
+                    this.$set(this.$data._slide, value, {
+                        breadcrumb: _["breadcrumb"],
+                        pageTitle: _["category"] ? _["category"]["Name"] : "Tất cả",
+                        totalPage: _["totalPage"],
+                    });
+                    if (_.books.length)
+                        this.$data._slide[value]["_books"] = {
+                            1: _.books
+                        };
+                }
+
+                this.$nextTick(() => {
+                    this.currentPage = 1;
+
+                    this.books = this._books ? this._books[1] : null;
+
+                    change_breadcrumb(this.current["breadcrumb"]);
+
+                    window.history.pushState("", "", `<?= base_url() ?>${value}`);
+                })
             }
         }
     }
