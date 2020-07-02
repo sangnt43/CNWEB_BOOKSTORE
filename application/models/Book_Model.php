@@ -149,4 +149,14 @@ class Book_Model extends My_Model
                 false
             );
     }
+
+    public function getByList($array)
+    {
+        $array = array_map(function ($e) {
+            return "'$e'";
+        }, $array);
+        return $this->_map(
+            $this->db->query("SELECT * FROM books where Id in(" . join(',', $array) . ")")->result_array()
+        );
+    }
 }

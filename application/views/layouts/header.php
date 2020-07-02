@@ -9,23 +9,25 @@
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="navbar-item <?= isCurrentTab("home") ? "active" : "" ?>">
-                            <a href="<?= base_url() ?>" class="nav-link">Home</a>
+                            <a href="<?= base_url() ?>" class="nav-link">Trang chủ</a>
                         </li>
                         <li class="navbar-item <?= isCurrentTab("shop") ? "active" : "" ?>">
-                            <a href="<?= base_url("all") ?>" class="nav-link">Shop</a>
+                            <a href="<?= base_url("all") ?>" class="nav-link">Thể loại</a>
                         </li>
-                        <li class="navbar-item <?= isCurrentTab("about") ? "active" : "" ?>">
+                        <!-- <li class="navbar-item <?= isCurrentTab("about") ? "active" : "" ?>">
                             <a href="<?= base_url("about") ?>" class="nav-link">About</a>
                         </li>
                         <li class="navbar-item <?= isCurrentTab("faq") ? "active" : "" ?>">
                             <a href="<?= base_url("faq") ?>" class="nav-link">FAQ</a>
-                        </li>
+                        </li> -->
                         <?php if (empty(currentUser())) : ?>
                             <li class="navbar-item <?= isCurrentTab("login") ? "active" : "" ?>">
-                                <a href="<?= base_url("login") ?>" class="nav-link">Login</a>
+                                <a href="<?= base_url("login") ?>" class="nav-link">Đăng nhập</a>
                             </li>
                         <?php else : ?>
-
+                            <li class="navbar-item <?= isCurrentTab("login") ? "active" : "" ?>">
+                                <a href="<?= base_url("login") ?>" class="nav-link">Tài khoản</a>
+                            </li>
                         <?php endif; ?>
                     </ul>
                 </div>

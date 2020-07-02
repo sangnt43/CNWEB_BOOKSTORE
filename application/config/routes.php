@@ -7,8 +7,14 @@ $route['login'] = "Auth/login";
 $route['logout'] = "Auth/logout";
 $route['profile'] = "Auth/profile";
 $route['changePassword'] = "Auth/changePassword";
+$route['changeProfile'] = "Auth/changeProfile";
 $route['register'] = "Auth/register";
-$route['forget'] = "Auth/forget";
+$route['forget'] = "Auth/forget_";
+$route['forget/(:any)'] = "Auth/forget/$1";
+$route['wich'] = "Auth/wichList";
+$route['transaction'] = "Auth/transaction";
+$route['transaction/(:any)'] = "Transaction/index/$1";
+
 
 $route['search'] = "Shop/search";
 

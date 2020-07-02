@@ -1,0 +1,1 @@
+Vue.component('v-model', require('./components/v-model.vue').default);

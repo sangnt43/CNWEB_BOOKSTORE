@@ -20,7 +20,6 @@
                     this.$data._books[value] = res.books;
                 }
                 this.books = this.$data._books[value];
-
             }
         }
     }

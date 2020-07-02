@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists("login")) {
+if (!function_exists("save")) {
     function save($data)
     {
         get_instance()->session->set_userdata("MY_User", $data);
@@ -21,5 +21,13 @@ if (!function_exists("logout")) {
     function logout()
     {
         session_destroy();
+    }
+}
+
+if (!function_exists("cache")) {
+    function cache($key, $val = null)
+    {
+        $ci = get_instance();
+        return $val == null ? $ci->cache->file->get($key) :  $ci->cache->file->save($key, $val, 3 * 60);
     }
 }

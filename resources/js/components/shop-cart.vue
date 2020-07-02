@@ -1,5 +1,5 @@
 <template>
-  <div style="cursor: pointer;">
+  <div style="cursor: pointer;" @click="onClick">
     <span>
       <i class="fa fa-shopping-cart" aria-hidden="true"></i>
     </span>
@@ -42,6 +42,10 @@ export default {
     },
     updateCart() {
       this.cart = JSON.parse(localStorage.getItem("cardItem")) || [];
+    },
+    onClick(){
+      console.log("clicked");
+      this.$emit("click",this.cart)
     }
   }
 };

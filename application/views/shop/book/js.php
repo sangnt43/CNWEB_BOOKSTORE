@@ -16,6 +16,7 @@
                 let res = await call_api(`${item['Seo']}`)
                 this.book = res.book;
                 change_breadcrumb(res["breadcrumb"]);
+                history.pushState(item['Name'], item['Name'], `${item['Seo']}`);
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             },

@@ -49,3 +49,7 @@ $(document).ready(function() {
         loop: true,
     });
 });
+
+const showNoti = function(message, type) {
+
+}
