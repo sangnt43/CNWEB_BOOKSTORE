@@ -29,27 +29,7 @@ const change_breadcrumb = function(htmlString) {
     document.querySelector(".breadcrumb").replaceWith(_node);
 }
 
-$(document).ready(function() {
-    $("#owl-demo").owlCarousel({
-        navigation: true, // Show next and prev buttons
-        slideSpeed: 300,
-        paginationSpeed: 400,
-        singleItem: true,
-        items: 1,
-        autoPlay: 3000,
-        loop: true,
-    });
-    $("#testimonal").owlCarousel({
-        navigation: true, // Show next and prev buttons
-        slideSpeed: 300,
-        paginationSpeed: 400,
-        singleItem: true,
-        items: 1,
-        autoPlay: 3000,
-        loop: true,
-    });
-});
-
 const showNoti = function(message, type) {
-
+    if (type == "danger") type = 'error';
+    $.notify(message, type);
 }

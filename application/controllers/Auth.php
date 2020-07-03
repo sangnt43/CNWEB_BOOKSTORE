@@ -19,20 +19,33 @@ class Auth extends My_Controller
             ]);
             return;
         }
-        if ($this->input->post("username") == "" || $this->input->post("password") == "")
-            show_404();
 
-        $res = $this->repo->login(
-            $this->input->post("username"),
-            $this->input->post("password")
-        );
+        $this->__LAYOUT__ = null;
+        $data = [];
 
-        if (empty($res)) echo json_encode([
-            "message" => "Error"
-        ]);
-        else echo json_encode([
-            "message" => "Success"
-        ]);
+        if (!empty($this->input->post())) {
+            $res = $this->repo->login(
+                $this->input->post("username"),
+                $this->input->post("password")
+            );
+
+            if (empty($res)) {
+                $data['username'] = $this->input->post("username");
+                $data["success"] = "0";
+                $data["message"] = "Thất bại";
+            } else {
+                save($res);
+
+                $this->session->set_flashdata("remind", [
+                    "success" => "1",
+                    "message" => "Đăng nhập thành công"
+                ]);
+
+                redirect(base_url());
+            }
+        }
+
+        return $this->view("login", $data);
     }
     # region Return View
     public function changePassword()
@@ -95,7 +108,7 @@ class Auth extends My_Controller
         if (empty(currentUser())) show_404();
 
         $data["user"] = currentUser();
-            // $this->repo->getCurrentUser();
+        // $this->repo->getCurrentUser();
 
         $this->push_breadcrum("Thông tin tài khoản");
         if (!IsAjax()) {
@@ -152,6 +165,28 @@ class Auth extends My_Controller
 
     public function register()
     {
+        if (!empty(currentUser())) {
+            echo  json_encode([
+                "message" => "Success"
+            ]);
+            return;
+        }
+
+        $this->__LAYOUT__ = null;
+        $data = [];
+
+        if (!empty($this->input->post())) {
+            // register
+            $res = $this->repo->register($this->input->post());
+            if (!empty($res)) {
+                redirect(base_url("login"));
+            } else {
+                $data['message'] = "Thất bại";
+                $data['success'] = "0";
+            }
+        }
+
+        return $this->view("register", $data);
     }
 
     public function transaction()

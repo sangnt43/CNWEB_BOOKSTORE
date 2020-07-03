@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $route['GetObjectId'] = "GetObjectId";
 
+$route['cart'] = "Cart/index";
 $route['login'] = "Auth/login";
 $route['logout'] = "Auth/logout";
 $route['profile'] = "Auth/profile";

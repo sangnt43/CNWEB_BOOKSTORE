@@ -57,7 +57,7 @@
                 </div>
                 <div class="btn-sec">
                     <button class="btn" @click="addItem">Thêm vào giỏ hàng</button>
-                    <a @click="addItem" href="<?= base_url("checkout") ?>" class="btn black">Mua ngay</a>
+                    <a @click="addItem" href="<?= base_url("cart") ?>" class="btn black">Mua ngay</a>
                 </div>
             </div>
         </div>

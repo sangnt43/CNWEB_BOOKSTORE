@@ -11,7 +11,7 @@
         data: {
             user: {
                 "Username": "",
-                "Fullname": "",
+                "FullName": "",
                 "Address": "",
                 "Phone": "",
                 "Email": ""

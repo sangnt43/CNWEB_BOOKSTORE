@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Họ và tên</label>
-                        <input type="text" v-model="user['Fullname']" class="form-control">
+                        <input type="text" v-model="user['FullName']" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">Địa chỉ</label>

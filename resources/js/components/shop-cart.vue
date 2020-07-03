@@ -35,19 +35,24 @@ export default {
     push(item, quantity = 1) {
       if (item["Id"]) {
         let _ = this.cart.find(x => x.id == item["Id"]);
-        if (_) _["quantity"] += quantity;
+        if (_) _["quantity"] += Number(quantity);
         else
           this.cart.push({
             id: item["Id"],
             name: item["Name"],
             avatar: item["Avatar"],
             seo: item["Seo"],
+            discount: item["Discount"],
+            price: item["Price"],
             quantity: quantity
           });
-        localStorage.setItem("cardItem", JSON.stringify(this.cart));
+        this.update();
 
         this.$emit("update:cart", this.cart);
       }
+    },
+    update() {
+      localStorage.setItem("cardItem", JSON.stringify(this.cart));
     },
     updateCart() {
       this.cart = JSON.parse(localStorage.getItem("cardItem")) || [];

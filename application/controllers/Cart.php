@@ -7,8 +7,13 @@ class Cart extends My_Controller
     {
         parent::__construct();
         $this->__LAYOUT__ = "main";
+        $this->load->model("Book_Model", "repo");
     }
-
+    public function index()
+    {
+        $data['recommendes'] = $this->repo->getRecommends();
+        return $this->view("index",$data);
+    }
     public function checkout()
     {
     }

@@ -30,6 +30,10 @@ class User_Model extends My_Model
 
     public function register($data)
     {
+        $data['Id'] = ObjectId();
+        $data['password'] = md5($data['password']);
+        $this->db->insert($this->table, $data);
+        return $this->db->affected_rows();
     }
 
     public function getCurrentUser()

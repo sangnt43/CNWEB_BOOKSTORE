@@ -9,13 +9,22 @@
 
 <script>
     Vue.directive("currency", {
-        bind(el, ) {
+        bind(el) {
             if (!window.formater) window.formater = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: '<?= __CURRENCY__ ?>',
                 minimumFractionDigits: <?= __CURRENCY_DECIAML__ ?>
             })
             el.innerHTML = formater.format(el.innerText);
+        },
+        componentUpdated(el) {
+            if (!window.formater) window.formater = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: '<?= __CURRENCY__ ?>',
+                minimumFractionDigits: <?= __CURRENCY_DECIAML__ ?>
+            })
+            if (!isNaN(el.innerText))
+                el.innerHTML = formater.format(el.innerText);
         }
     })
 </script>

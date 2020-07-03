@@ -18,6 +18,7 @@
 
 <?php $this->load->view("layouts/" . __INCLUDE_SCRIPT__) ?>
 <?php if (isset($_js_) && is_file(VIEWPATH . explode(".", $_js_)[0] . ".php")) $this->load->view($_js_) ?>
+
 <script>
     window.addEventListener("DOMContentLoaded", function() {
         var _time;

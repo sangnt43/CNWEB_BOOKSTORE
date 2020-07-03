@@ -25,3 +25,12 @@ if (!function_exists("getAllCategories")) {
         return $ci->BookCategory_Model->get();
     }
 }
+
+if (!function_exists("showNoti")) {
+    function showNoti($message, $type)
+    {
+        $ci = get_instance();
+
+        return $ci->load->view("layouts/noti.php", ["message" => $message, "type" => $type]);
+    }
+}
