@@ -25,25 +25,39 @@
             </div>
             <div class="col-md-6 slider-content">
                 <p v-html="book['Description']"></p>
-                <ul v-if="book.discount">
-                    <li>
-                        <span class="name">Discount</span><span class="clm">:</span>
-                        <span class="price" v-currency>{{book.Price}}</span>
-                    </li>
-                    <li>
-                        <span class="name">Kindle Price</span><span class="clm">:</span>
-                        <span class="price final" v-currency>{{book.Price - (book.Price * book.Discount / 100)}}</span>
-                    </li>
-                </ul>
-                <ul v-else>
-                    <li>
-                        <span class="name">Kindle Price</span><span class="clm">:</span>
-                        <span class="price final" v-currency>{{book.Price}}</span>
-                    </li>
-                </ul>
+                <div>
+                    <ul style="width: 100%; margin-bottom:10px" v-if="book.discount">
+                        <li>
+                            <span class="name">Giảm</span><span class="clm">:</span>
+                            <span class="price" v-currency>{{book.Price}}</span>
+                        </li>
+                        <li>
+                            <span class="name">Giá</span><span class="clm">:</span>
+                            <span class="price final" v-currency>{{book.Price - (book.Price * book.Discount / 100)}}</span>
+                        </li>
+                    </ul>
+                    <ul style="width: 100%; margin-bottom:10px" v-else>
+                        <li>
+                            <span class="name">Giá</span><span class="clm">:</span>
+                            <span class="price final" v-currency>{{book.Price}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="">Số Lượng:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend" style="cursor: pointer;" @click="quantity--">
+                            <div class="input-group-text">-</div>
+                        </div>
+                        <input type="email" class="form-control" placeholder="Quantity" v-model="quantity">
+                        <div class="input-group-append" style="cursor: pointer;" @click="quantity++">
+                            <div class="input-group-text">+</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="btn-sec">
-                    <button class="btn" @click="addItem">Add To cart</button>
-                    <button class="btn black">Buy Now</button>
+                    <button class="btn" @click="addItem">Thêm vào giỏ hàng</button>
+                    <a @click="addItem" href="<?= base_url("checkout") ?>" class="btn black">Mua ngay</a>
                 </div>
             </div>
         </div>

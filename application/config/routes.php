@@ -15,7 +15,7 @@ $route['wich'] = "Auth/wichList";
 $route['transaction'] = "Auth/transaction";
 $route['transaction/(:any)'] = "Transaction/index/$1";
 
-
+$route['checkout'] = "Cart/checkout";
 $route['search'] = "Shop/search";
 
 $route['about'] = "Infomation/about";
