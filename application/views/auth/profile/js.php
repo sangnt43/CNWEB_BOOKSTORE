@@ -43,7 +43,7 @@
                 });
             <?php endif; ?>
             <?php if (!isCurrentTab("transaction")) : ?>
-                call_api("<?= base_url("transaction") ?>").then(b => this.transaction = b.books);
+                call_api("<?= base_url("transaction") ?>").then(b => this.transactions = b.transactions);
             <?php endif; ?>
             <?php if (!isCurrentTab("wich")) : ?>
                 call_api("<?= base_url("wich") ?>").then(b => this.wich = b.wich);
@@ -105,6 +105,10 @@
                         showNoti("Thành công", "danger");
                         break;
                 }
+            },
+            onTransactionClick(value) {
+                this.shippingSrc = `<?= base_url("transaction") ?>/${value}`;
+                this.showShippingStatus = true;
             }
         }
     }

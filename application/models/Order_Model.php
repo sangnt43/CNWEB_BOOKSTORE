@@ -4,39 +4,28 @@ class Order_Model extends My_Model
 {
     public function __construct()
     {
-        parent::__construct("infomations");
+        parent::__construct("orders");
     }
     public function get(?string $id = null)
     {
-        return [
-            "Id" => $id,
-            "TransactionId" => $id,
-            "CustomerInfo_Id" => 123,
-            "CustomerInfo_FullName" => "admin",
-            "CustomerInfo_Address" => "test",
-            "CustomerInfo_ShippingPrice" => 5,
-            "CustomerInfo_Phone" => 12345678,
-            "CustomerInfo_Email" => "admin@admin.com",
-            "Status" => 1,
-            "Voucher" => null,
-            "Total" => 125,
-            "CreateDate" => time(),
-            "UpdateDate" => time()
-        ];
+        return $this->db->get_where($this->table, ["Id" => $id])->row_array();
     }
     public function getBooksByOrder($id)
     {
-        return [
-            [
-                "Name" => "The Ring of Truth",
-                "Price" => 10,
-                "Quantity" => 1
-            ],
-            [
-                "Name" => "How To Be A Bwase",
-                "Price" => 10,
-                "Quantity" => 2
-            ]
-        ];
+        return $this->db
+            ->select("books.Name,books.Price,order_details.Quantity")
+            ->join("books", "order_details.BookId = books.Id")
+            ->get_where("order_details", ['OrderId' => $id])
+            ->result_array();
+    }
+    public function save($data)
+    {
+        $this->db->insert($this->table, $data);
+        return $this->db->affected_rows();
+    }
+    public function addList($array)
+    {
+        $this->db->insert_batch("order_details", $array);
+        return $this->db->affected_rows();
     }
 }

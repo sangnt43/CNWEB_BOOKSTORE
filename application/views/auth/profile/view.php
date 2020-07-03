@@ -59,7 +59,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in transactions">
-                                <td>{{item['Id']}}</td>
+                                <td><a href="#" @click.prevent="onTransactionClick(item['Id'])">{{item['Id']}}</a></td>
                                 <td>{{item['CustomerInfo_Address']}}</td>
                                 <td>{{item['CustomerInfo_ShippingPrice']}}</td>
                                 <td>{{item['Status']}}</td>
@@ -113,7 +113,7 @@
     </div>
 </v-model>
 
-<v-model v-if="shippingSrc" :is-active.sync="showShippingStatus" size="lg">
+<v-model :is-active.sync="showShippingStatus" size="lg">
     <div class="modal-body">
         <iframe :src="shippingSrc" frameborder="1" width="100%" height="450"></iframe>
     </div>

@@ -24,7 +24,8 @@
         var _time;
 
         if (typeof vue_js == 'undefined') vue_js = {
-            el: "#embed"
+            el: "#embed",
+            data: {}
         }
 
         vue_js['data']['cart'] = null;
@@ -38,5 +39,6 @@
         });
     })
 </script>
+<?php checkNoti() ?>
 
 </html>

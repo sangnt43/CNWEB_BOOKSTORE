@@ -20,17 +20,17 @@
             <!-- fieldsets -->
             <fieldset v-if="step == 1">
                 <h2 class="fs-title">Tạo tài khoản</h2>
-                <input type="text" v-model="user['username']" placeholder="Username" />
-                <input type="password" v-model="user['password']" placeholder="Password" />
-                <input type="password" v-model="user['cpassword']" placeholder="Confirm Password" />
-                <input type="button" @click.prvent="step = 2" name="next" class="next action-button" value="Next" />
+                <input type="text" required v-model="user['username']" placeholder="Username" />
+                <input type="password" required v-model="user['password']" placeholder="Password" />
+                <input type="password" required v-model="user['cpassword']" placeholder="Confirm Password" />
+                <input type="button" required @click.prvent="step = 2" name="next" class="next action-button" value="Next" />
             </fieldset>
             <fieldset v-else>
                 <h2 class="fs-title">Thông tin cá nhân</h2>
-                <input type="text" v-model="user['fullname']" placeholder="Full Name" />
-                <input type="text" v-model="user['email']" placeholder="Email" />
-                <input type="text" v-model="user['phone']" placeholder="Phone" />
-                <textarea v-model="user['address']" placeholder="Address"></textarea>
+                <input type="text" required v-model="user['fullname']" placeholder="Full Name" />
+                <input type="text" required v-model="user['email']" placeholder="Email" />
+                <input type="text" requiredv-model="user['phone']" placeholder="Phone" />
+                <textarea required v-model="user['address']" placeholder="Address"></textarea>
                 <input type="button" @click.prvent="step = 1" name="previous" class="previous action-button" value="Previous" />
                 <input type="submit" class="submit action-button" value="Submit" />
             </fieldset>

@@ -34,3 +34,17 @@ if (!function_exists("showNoti")) {
         return $ci->load->view("layouts/noti.php", ["message" => $message, "type" => $type]);
     }
 }
+
+if (!function_exists("checkNoti")) {
+    function checkNoti()
+    {
+        $ci = get_instance();
+        $data = $ci->session->flashdata('remind');
+
+        if (isset($data['script']))
+            echo $data['script'];
+
+        if ($data != "")
+            return $ci->load->view("layouts/noti.php", ["message" => $data['message'], "type" => $data['type']]);
+    }
+}

@@ -38,7 +38,8 @@ class Auth extends My_Controller
 
                 $this->session->set_flashdata("remind", [
                     "success" => "1",
-                    "message" => "Đăng nhập thành công"
+                    "message" => "Đăng nhập thành công",
+                    "type" => "success"
                 ]);
 
                 redirect(base_url());

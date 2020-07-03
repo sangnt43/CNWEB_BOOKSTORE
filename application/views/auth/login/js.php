@@ -4,14 +4,14 @@
         data: {
             step: 1,
             user: {
-                username: "",
+                username: "<?= isset($username) ? $username : '' ?>",
                 password: ""
             }
         },
         computed: {},
         methods: {
             onSubmit() {
-                if (this.username.trim() == "" || this.password.trim() == "") event.preventDefault();
+                if (this.user.username.trim() == "" || this.user.password.trim() == "") event.preventDefault();
             }
         }
     }

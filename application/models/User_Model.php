@@ -52,7 +52,10 @@ class User_Model extends My_Model
         $currentUser = currentUser();
         if (empty($currentUser)) return NULL;
 
-        return $this->db->join("order_statues", "order_statues.Id = orders.StatusId")->get_where("orders", ["CustomerInfo_Id" => $currentUser['Id']])->result_array();
+        return $this->db
+        ->select("orders.*,order_statues.Status")
+            ->join("order_statues", "order_statues.Id = orders.StatusId")
+            ->get_where("orders", ["CustomerInfo_Id" => $currentUser['Id']])->result_array();
     }
 
     public function checkPassword($password)
