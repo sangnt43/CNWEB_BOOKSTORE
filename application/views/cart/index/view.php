@@ -1,6 +1,7 @@
 <div class="static">
     <div class="container">
-        <form class="row" action="<?= base_url("checkout") ?>">
+        <form class="row" action="<?= base_url("checkout") ?>" method="POST">
+            <input type="hidden" name="fromCart" value="cart">
             <div class="col-12 col-md-9 mb-5">
                 <div v-for="item in cart">
                     <div>

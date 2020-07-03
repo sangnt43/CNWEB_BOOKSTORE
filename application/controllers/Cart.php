@@ -16,5 +16,6 @@ class Cart extends My_Controller
     }
     public function checkout()
     {
+        debug($this->input->post());
     }
 }
