@@ -1,4 +1,6 @@
-<div class="modal-body row pb-0">
+<h5 class="text-center py-3">Đơn hàng: <?=$order['Id']?></h5>
+
+<div class="modal-body row mb-5 pb-0">
     <div class="col-12 col-lg-6">
         <div class="card">
             <div class="card-header bg-success text-white">
@@ -25,7 +27,6 @@
         </div>
     </div>
     <div class="col-12 col-lg-6">
-
         <div class="card">
             <div class="card-header bg-success text-white">
                 Đơn hàng
@@ -35,11 +36,14 @@
                     <i class="fa fa-truck mr-4" style="padding-top: 3px;" aria-hidden="true"></i>
                     <p v-currency>{{order['CustomerInfo_ShippingPrice']}}</p>
                 </div>
+                <div class="card-text d-flex mb-1">
+                    <i class="fa fa-hourglass mr-4" style="padding-top: 3px;" aria-hidden="true"></i>
+                    <p>{{order['Status']}}</p>
+                </div>
                 <hr>
                 <h5 class="card-title mb-0">Tổng tiền: <strong v-currency>{{order['Total']}}</strong></h5>
             </div>
         </div>
-
     </div>
     <div class="col-12">
         <div class="card">

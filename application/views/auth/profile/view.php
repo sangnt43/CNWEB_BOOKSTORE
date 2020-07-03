@@ -112,3 +112,9 @@
         <button type="button" class="btn black" data-dismiss="modal">Close</button>
     </div>
 </v-model>
+
+<v-model v-if="shippingSrc" :is-active.sync="showShippingStatus" size="lg">
+    <div class="modal-body">
+        <iframe :src="shippingSrc" frameborder="1" width="100%" height="450"></iframe>
+    </div>
+</v-model>

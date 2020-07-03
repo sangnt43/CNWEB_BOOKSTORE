@@ -94,7 +94,8 @@ class Auth extends My_Controller
     {
         if (empty(currentUser())) show_404();
 
-        $data["user"] = $this->repo->getCurrentUser();
+        $data["user"] = currentUser();
+            // $this->repo->getCurrentUser();
 
         $this->push_breadcrum("Thông tin tài khoản");
         if (!IsAjax()) {
@@ -174,7 +175,6 @@ class Auth extends My_Controller
         $data["wich"] = $this->book->getByList(explode(",", get_cookie("wich")));
 
         $data['navi'] = "wich";
-
 
         if (!empty(currentUser())) {
             $this->push_breadcrum("Thông tin tài khoản");

@@ -34,18 +34,22 @@ export default {
         else
           this.cart.push({
             id: item["Id"],
+            name: item["Name"],
+            avatar: item["Avatar"],
             seo: item["Seo"],
             quantity: quantity
           });
         localStorage.setItem("cardItem", JSON.stringify(this.cart));
+
+        this.$emit("update:cart", this.cart);
       }
     },
     updateCart() {
       this.cart = JSON.parse(localStorage.getItem("cardItem")) || [];
+      this.$emit("update:cart", this.cart);
     },
-    onClick(){
-      console.log("clicked");
-      this.$emit("click",this.cart)
+    onClick() {
+      this.$emit("click", this.cart);
     }
   }
 };

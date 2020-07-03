@@ -1,6 +1,6 @@
 <template>
   <div ref="my-modal" class="modal fade" role="dialog" style="overflow-y: auto">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" :class="size?'modal-'+size:''" role="document">
       <div class="modal-content">
         <slot></slot>
       </div>
@@ -14,13 +14,16 @@ export default {
   props: {
     isActive: {
       default: false
+    },
+    size: {
+      default: null
     }
   },
   data() {
     return {};
   },
   mounted() {
-      // console.log(this.$slots)
+    // console.log(this.$slots)
   },
   watch: {
     isActive(val) {

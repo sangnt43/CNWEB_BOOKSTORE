@@ -20,7 +20,9 @@
             password: password(),
             transactions: null,
             wich: null,
-            isActive: false
+            isActive: false,
+            showShippingStatus: false,
+            shippingSrc: null
         },
         created() {
             <?php if (isset($user)) : ?>
@@ -37,7 +39,7 @@
             <?php if (!isCurrentTab("profile")) : ?>
                 call_api("<?= base_url("profile") ?>").then(b => {
                     this.user = b.user;
-                    this.$data._user = JSON.stringify(JSON.parse(this.user));
+                    this.$data._user = JSON.parse(JSON.stringify(this.user));
                 });
             <?php endif; ?>
             <?php if (!isCurrentTab("transaction")) : ?>

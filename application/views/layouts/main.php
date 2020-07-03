@@ -25,8 +25,16 @@
         if (typeof vue_js == 'undefined') vue_js = {
             el: "#embed"
         }
-        
+
+        vue_js['data']['cart'] = null;
+
         new Vue(vue_js), vue_js = undefined;
+
+        $('.dropdown').hover(function() {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+        }, function() {
+            $(this).find('.dropdown-menu').stop(true, true).delay(400).fadeOut(500);
+        });
     })
 </script>
 

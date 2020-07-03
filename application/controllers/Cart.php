@@ -12,7 +12,4 @@ class Cart extends My_Controller
     public function checkout()
     {
     }
-    public function shippingStatus()
-    {
-    }
 }

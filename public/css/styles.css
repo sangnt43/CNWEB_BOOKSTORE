@@ -767,6 +767,9 @@ header .cart .quntity {
     header .cart .quntity {
         font-size: 10px;
     }
+    header .dropdown-menu {
+        left: 0;
+    }
     header .main-menu .navbar .break {
         flex-basis: 100%;
         width: 0px;
@@ -1453,6 +1456,26 @@ header .cart .quntity {
     .related-books h2 {
         font-size: 24px;
     }
+}
+
+.shop-cart>.dropdown-menu>div.item {
+    height: 65px;
+}
+
+.shop-cart img {
+    float: left;
+    margin-right: 10px;
+}
+
+.shop-cart p {
+    margin: 0px;
+    height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.shop-cart span {
+    font-size: 14px;
 }
 
 #shopping-cart {

@@ -11,10 +11,8 @@ if (!function_exists("getBanner")) {
     function getBanber()
     {
         $ci = get_instance();
-        $ci->load->model("Banner_Model", "model");
-
-        $data['banners'] = $ci->model->get();
-
+        $ci->load->model("Banner_Model");
+        $data['banners'] = $ci->Banner_Model->get();
         $ci->load->view("layouts/banner.php", $data);
     }
 }
@@ -23,7 +21,7 @@ if (!function_exists("getAllCategories")) {
     function getAllCategories()
     {
         $ci = get_instance();
-        $ci->load->model("BookCategory_Model", "model");
-        return $ci->model->get();
+        $ci->load->model("BookCategory_Model");
+        return $ci->BookCategory_Model->get();
     }
 }
