@@ -10,6 +10,11 @@
 <script>
 export default {
   name: "ShopCart",
+  props: {
+    href: {
+      default: null
+    }
+  },
   data() {
     return {
       cart: []
@@ -50,6 +55,7 @@ export default {
     },
     onClick() {
       this.$emit("click", this.cart);
+      if (this.href) location.replace(this.href);
     }
   }
 };
