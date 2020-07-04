@@ -44,7 +44,7 @@
                 <div class="break"></div>
                 <div style="display: contents;">
                     <div class="dropdown shop-cart">
-                        <shop-cart :cart.sync="cart" href="<?= base_url("cart") ?>" ref="shop-cart" class="cart my-2 my-lg-0"></shop-cart>
+                        <shop-cart :on-item-add="showNoti" :cart.sync="cart" href="<?= base_url("cart") ?>" ref="shop-cart" class="cart my-2 my-lg-0"></shop-cart>
                         <div class="dropdown-menu px-3" style="width: 20rem;">
                             <div v-if="cart && cart.length != 0" v-for="item in cart" class="item">
                                 <a :href="item['seo']"><img :src="item['avatar']" :alt="item['name']" width="40px"></a>

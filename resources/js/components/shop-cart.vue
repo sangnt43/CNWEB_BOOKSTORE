@@ -13,6 +13,9 @@ export default {
   props: {
     href: {
       default: null
+    }, 
+    onItemAdd: {
+      default: null
     }
   },
   data() {
@@ -53,6 +56,9 @@ export default {
     },
     update() {
       localStorage.setItem("cardItem", JSON.stringify(this.cart));
+
+      if(this.onItemAdd != null)
+        this.onItemAdd();
     },
     updateCart() {
       this.cart = JSON.parse(localStorage.getItem("cardItem")) || [];
