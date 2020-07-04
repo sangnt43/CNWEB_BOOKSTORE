@@ -48,7 +48,7 @@ class My_Controller extends CI_Controller
         $data['_title_'] = $this->__TITLE__;
 
         if (!empty($this->__BREADCRUM__))
-            $data['breadcrumb'] = $this->load->view("layouts/breadcrumb", ["breadcrumb" => $this->__BREADCRUM__],true);
+            $data['breadcrumb'] = $this->load->view("layouts/breadcrumb", ["breadcrumb" => $this->__BREADCRUM__], true);
 
         echo json_encode($data);
     }
@@ -66,5 +66,48 @@ class My_Controller extends CI_Controller
             "name" => $name,
             "url" => $url == null ? null : $url
         ];
+    }
+}
+
+
+class My_Admin_Controller extends My_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    protected function json_data($exitcode = 0, $message = "", $data = [])
+    {
+        return [
+            "exitcode" => $exitcode,
+            "message" => $message,
+            "data" => $data,
+        ];
+    }
+
+    protected function view($view = "index", $data = [])
+    {
+        $data['_title_'] = $this->__TITLE__;
+
+        if (isset($data['navi'])) {
+            $this->session->set_flashdata('_navi_', join('_', [$this->__NAVI__, $data['navi']]));
+            unset($data['navi']);
+        } else
+            $this->session->set_flashdata('_navi_', join('_', [$this->__NAVI__, strtolower($view)]));
+
+        if (!empty($this->__BREADCRUM__))
+            $data['breadcrumb'] = $this->__BREADCRUM__;
+
+        if (isset($this->__FOLDER__)) $view = "admin/$this->__FOLDER__/$view";
+
+        $data['_js_'] = "$view/js";
+
+        if (isset($this->__LAYOUT__)) {
+            $data['_view_'] = "$view/view";
+            $view = "admin/layouts/$this->__LAYOUT__";
+        } else $view = "$view/view";
+
+        $this->load->view($view, $data);
     }
 }

@@ -1,0 +1,75 @@
+#__table__ .toggle-switch.center {
+    margin-left: -30px;
+}
+
+#__table__ .toggle-switch.center input {
+    margin-left: 15px;
+}
+
+#__table__ .btn-custom {
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+#__table__ .btn-custom i {
+    margin-top: 1px;
+}
+
+#__table__ {
+    width: 100%!important;
+}
+
+.my_resizeable_div input {
+    width: calc(100% - var(--minus));
+    border: none;
+    border-bottom: 1px solid #eceff1
+}
+
+@media only screen and (max-width: 430px) {
+    .my_resizeable_div input {
+        width: 100%;
+    }
+}
+
+div.MyImage {
+    position: relative;
+    /* height: 60px;
+    width: 60px; */
+}
+
+div.MyImage img {
+    display: block;
+    position: relative;
+    /* height: 60px;
+    width: 60px; */
+}
+
+div.MyImage:hover img {
+    opacity: 0.2;
+}
+
+div.MyImage:hover button {
+    display: block;
+    color: black;
+    z-index: 9999999;
+}
+
+div.MyImage button {
+    display: none;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.flatpickr-rContainer {
+    margin-left: -15px;
+}
+
+.my-card {
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

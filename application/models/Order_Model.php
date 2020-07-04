@@ -13,7 +13,7 @@ class Order_Model extends My_Model
     public function getBooksByOrder($id)
     {
         return $this->db
-            ->select("books.Name,books.Price,order_details.Quantity")
+            ->select("books.Name,books.Price,order_details.Quantity,books.Seo")
             ->join("books", "order_details.BookId = books.Id")
             ->get_where("order_details", ['OrderId' => $id])
             ->result_array();

@@ -17,6 +17,16 @@ if (!function_exists("currentUser")) {
     }
 }
 
+if (!function_exists("currentAdmin")) {
+    function currentAdmin()
+    {
+        $session = get_instance()->session;
+        if ($session->has_userdata("My_Admin"))
+            return NULL;
+        return $session->userdata("My_Admin");
+    }
+}
+
 if (!function_exists("logout")) {
     function logout()
     {

@@ -83,6 +83,17 @@ class Book_Model extends My_Model
             );
     }
 
+    public function getAllShort()
+    {
+        return $this->_map(
+            $this->db
+                ->select("books.*,book_categories.Name as Category")
+                ->join("book_categories", "books.BookCategoryId = book_categories.Id")
+                ->get($this->table)->result_array(),
+            true
+        );
+    }
+
     public function countPage($query = null)
     {
         if ($query == null)

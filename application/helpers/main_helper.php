@@ -58,3 +58,40 @@ if (!function_exists("get_client_ip")) {
         return $ipaddress;
     }
 }
+
+if (!function_exists('multiexplode')) {
+    function multiexplode($delimiters, $string)
+    {
+        $ready = str_replace($delimiters, $delimiters[0], $string);
+        $launch = explode($delimiters[0], $ready);
+        return  $launch;
+    }
+}
+if (!function_exists("makeEditable")) {
+    function makeEditable($path)
+    {
+        if (!is_writable($path)) chmod($path, 0750);
+    }
+}
+if (!function_exists('createDirectory')) {
+    function createDirectory($path)
+    {
+        if ($path[0] == "\\" || $path[0] == "/") $path = substr($path, 1);
+        if (is_dir(PUBPATH . $path)) return;
+
+        if (!function_exists('tryCreateDirectory')) {
+            function tryCreateDirectory($path)
+            {
+                if (!is_dir($path)) mkdir($path);
+                makeEditable($path);
+            }
+        }
+        $paths = multiexplode(["\\", "/"], $path);
+        $path = PUBPATH;
+        foreach ($paths as $_path) {
+            $path .= $_path;
+            tryCreateDirectory($path);
+            $path .= "/";
+        }
+    }
+}

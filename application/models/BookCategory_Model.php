@@ -11,4 +11,8 @@ class BookCategory_Model extends My_Model
         return $this->db
             ->get_where($this->table, ["Seo" => $seo])->row_array();
     }
+    public function getAllShort()
+    {
+        return $this->db->get($this->table)->result_array();
+    }
 }
