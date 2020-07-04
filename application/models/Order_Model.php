@@ -18,6 +18,13 @@ class Order_Model extends My_Model
             ->get_where("order_details", ['OrderId' => $id])
             ->result_array();
     }
+    public function getAllShort()
+    {
+        return $this->db
+            ->select("orders.*,order_statues.Status,order_statues.StatusCode")
+            ->join("order_statues", "order_statues.Id = orders.StatusId")
+            ->get($this->table)->result_array();
+    }
     public function save($data)
     {
         $this->db->insert($this->table, $data);
