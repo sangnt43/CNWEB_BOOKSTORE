@@ -90,7 +90,7 @@ class Cart extends My_Controller
                 "success" => "1",
                 "message" => "Thanh toán thành công",
                 "type" => "success",
-                "script" => "<script>localstore.clear();</script>"
+                "script" => "<script>localStorage.clear();</script>"
             ]);
             redirect(base_url());
         } else {

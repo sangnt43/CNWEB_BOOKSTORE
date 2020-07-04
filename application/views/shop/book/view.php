@@ -46,7 +46,7 @@
                 <div class="mb-3 form-group">
                     <label for="">Số Lượng:</label>
                     <div class="input-group">
-                        <div class="input-group-prepend" style="cursor: pointer;" @click="quantity--">
+                        <div class="input-group-prepend" style="cursor: pointer;" @click="quantity-= (quantity != 0)">
                             <div class="input-group-text">-</div>
                         </div>
                         <input type="email" class="form-control" placeholder="Quantity" v-model="quantity">

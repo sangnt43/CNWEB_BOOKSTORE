@@ -8,6 +8,12 @@ class Dashboard extends CI_Controller
     }
     public function index()
     {
-        echo "ASD";
+        $this->session->set_flashdata("remind", [
+            "success" => "1",
+            "message" => "Thanh toán thành công",
+            "type" => "success",
+            "script" => "<script>localStorage.clear();</script>"
+        ]);
+        redirect(base_url());
     }
 }
