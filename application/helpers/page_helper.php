@@ -98,7 +98,7 @@ if (!function_exists("moveFile")) {
         $new = PUBPATH . $new;
 
         if (file_exists($new)) {
-            unlink($new);
+            // unlink($new);
             echo $new;
         }
         rename($ol, $new);

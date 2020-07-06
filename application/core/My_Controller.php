@@ -75,6 +75,9 @@ class My_Admin_Controller extends My_Controller
     public function __construct()
     {
         parent::__construct();
+
+        if (empty(currentAdmin()))
+            redirect(base_url("Admin/login"));
     }
 
     protected function json_data($exitcode = 0, $message = "", $data = [])

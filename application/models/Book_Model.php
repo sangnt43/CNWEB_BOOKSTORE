@@ -2,8 +2,7 @@
 
 class Book_Model extends My_Model
 {
-
-    private $item_per_page = 2;
+    private $item_per_page = 20;
 
     public function __construct()
     {
@@ -24,8 +23,10 @@ class Book_Model extends My_Model
                 unset($data['Images']);
                 unset($data['Info_Auth']);
                 unset($data['Info_PublisherId']);
-                if (strlen($data['Name']) > 20)
-                    $data['Name'] = substr($data['Name'], 0, 20) . "...";
+                $str = explode(' ', $data['Name']);
+
+                if (count($str) > 4)
+                    $data['Name'] = join(" ", array_splice($str, 0, 4)) . "...";
             }
             if (!empty($data['Images']))
                 $data['Images'] = array_map(array($this, "_mapImage"), explode(',', $data['Images']));
@@ -39,7 +40,7 @@ class Book_Model extends My_Model
         // return $;
         return $this->_map(
             $this->db
-                ->limit(5, 0)
+                ->limit(4, 0)
                 ->order_by("Count_Buy", "DESC")
                 ->get($this->table)
                 ->result_array()
@@ -51,7 +52,7 @@ class Book_Model extends My_Model
         return
             $this->_map(
                 $this->db
-                    ->limit($this->item_per_page, 0)
+                    ->limit(10, 0)
                     ->order_by("Count_Buy")
                     ->get("books")
                     ->result_array()

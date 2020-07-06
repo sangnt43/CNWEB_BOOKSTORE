@@ -14,7 +14,6 @@
                 return this.cart.reduce((a, b) => b.quantity + a, 0);
             }
         },
-        methods: {
-        }
+        methods: {}
     }
 </script>

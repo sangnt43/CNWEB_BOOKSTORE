@@ -30,8 +30,9 @@
 
         vue_js['data']['cart'] = null;
 
-        vue_js['methods']['showNoti'] = function()
+        vue_js['methods']['showNoti'] = function() {
             showNoti(`Đã Thêm sản phẩm`, "success");
+        }
 
         new Vue(vue_js), vue_js = undefined;
 

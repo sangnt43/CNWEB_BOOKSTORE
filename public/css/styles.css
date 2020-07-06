@@ -1458,8 +1458,13 @@ header .cart .quntity {
     }
 }
 
+.shop-cart>.dropdown-menu {
+    max-height: 550px;
+    overflow: auto;
+}
+
 .shop-cart>.dropdown-menu>div.item {
-    height: 65px;
+    height: 80px;
 }
 
 .shop-cart img {

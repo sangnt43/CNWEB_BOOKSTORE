@@ -3,10 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $route['GetObjectId'] = "GetObjectId";
 
-$route['[Aa]dmin'] = "Admin";
+$route['[Aa]dmin'] = "Admin/Order/index";
+$route['[Aa]dmin/login']['get'] = "Admin/Auth/index";
+$route['[Aa]dmin/login']['post'] = "Admin/Auth/login";
+$route['[Aa]dmin/logout'] = "Admin/Auth/logout";
 
 $route['cart'] = "Cart/index";
 $route['login'] = "Auth/login";
+
 $route['logout'] = "Auth/logout";
 $route['profile'] = "Auth/profile";
 $route['changePassword'] = "Auth/changePassword";
@@ -19,10 +23,9 @@ $route['transaction'] = "Auth/transaction";
 $route['transaction/(:any)'] = "Transaction/index/$1";
 
 $route['checkout'] = function () {
-    if (isset($_POST['total']))
-        return "Cart/checkout_";
-    return "Cart/checkout";
+    return (isset($_POST['total'])) ? "Cart/checkout_" : "Cart/checkout";
 };
+
 $route['search'] = "Shop/search";
 
 $route['about'] = "Infomation/about";

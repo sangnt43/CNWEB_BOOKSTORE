@@ -18,7 +18,6 @@
                 },
                 _banner: null,
                 bannerError: [],
-                <?= $_vueData ?>
             }
         },
         created() {
@@ -34,7 +33,6 @@
             this.$nextTick(() => {
                 $("form").bind("keypress", e => (e.keyCode != 13));
             })
-            <?= $_vueMounted ?>
         },
         methods: {
             preview(e) {
@@ -101,7 +99,6 @@
             makeUrl(title) {
                 return title.toLowerCase().trim().replace(/[áàảãạăắằẳẵặâấầẩẫậ]/g, 'a').replace(/[óòỏõọôốồổỗộơớờởỡợ]/g, 'o').replace(/[éèẻẽẹêếềểễệ]/g, 'e').replace(/[íìỉĩị]/g, 'i').replace(/[úùủũụưứừửữự]/g, 'u').replace(/[ýỳỷỹỵ]/g, 'y').replace(/[đ]/g, 'd').replace(/[^a-z0-9- ]/g, '').replace(/[ ]/g, '-').replace(/[--]+/g, '-');
             }
-            <?= $_vueMethods ?>
         },
     })
 </script>

@@ -26,4 +26,10 @@ class Banner_Model extends My_Model
             $this->db->get_where($this->table, ["IsActive" => 1])->result_array()
         );
     }
+    public function getAll()
+    {
+        return $this->_map(
+            $this->db->get_where($this->table)->result_array()
+        );
+    }
 }

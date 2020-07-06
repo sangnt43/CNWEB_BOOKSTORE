@@ -11,7 +11,10 @@
 
 <body>
     <div id="embed">
-        <form id="msform" action="<?= base_url("login") ?>" method="POST" @submit="onSubmit">
+        <form id="msform" action="<?= !isset($IsAdmin) ? base_url("login") : base_url("Admin/login") ?>" method="POST" @submit="onSubmit">
+            <?php if (!empty($IsAdmin)) : ?>
+                <input type="hidden" name="IsAdmin" value="true">
+            <?php endif; ?>
             <fieldset>
                 <h2 class="fs-title">Đăng nhập</h2>
                 <input type="text" name='username' v-model="user['username']" placeholder="Username" />
@@ -20,7 +23,7 @@
                 <div>
                     <a href="<?= base_url("forget") ?>">Quên mật khẩu</a>
                 </div>
-                <div><a href="<?= base_url("register")?>">Chưa có tài khoản?</a></div>
+                <div><a href="<?= base_url("register") ?>">Chưa có tài khoản?</a></div>
             </fieldset>
         </form>
     </div>

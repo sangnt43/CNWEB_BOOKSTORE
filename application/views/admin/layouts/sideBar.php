@@ -2,15 +2,15 @@
   <div class="scrollbar-inner">
     <div class="user">
       <div class="user__info" data-toggle="dropdown">
-        <img class="user__img" src="<?= (isset(currentAdmin()['avatar']) && file_exists(currentAdmin()['avatar'])) ?
-                                      base_url() . currentAdmin()['avatar'] : base_url() . "images/avatar/noImage.jpg" ?>" alt="">
+        <img class="user__img" src="<?= (isset(currentAdmin()['Avatar']) && file_exists(currentAdmin()['avatar'])) ?
+                                      base_url() . currentAdmin()['Avatar'] : base_url() . "images/avatar/noImage.jpg" ?>" alt="">
 
         <div>
           <div class="user__name">
-            <?= isset(currentAdmin()['fullname']) ? currentAdmin()['fullname'] : "" ?>
+            <?= isset(currentAdmin()['FullName']) ? currentAdmin()['FullName'] : "" ?>
           </div>
           <div class="user__email">
-            <?= isset(currentAdmin()['email']) ? currentAdmin()['email'] : "" ?>
+            <?= isset(currentAdmin()['Email']) ? currentAdmin()['Email'] : "" ?>
           </div>
         </div>
       </div>

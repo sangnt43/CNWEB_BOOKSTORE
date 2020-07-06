@@ -9,7 +9,7 @@ class Banner extends My_Admin_Controller
     }
     public function getAll()
     {
-        $res = $this->Banner->get();
+        $res = $this->Banner->getAll();
         for ($i = 0; $i < count($res); $i++)
             if (isset($res[$i]['image']))
                 $res[$i]['image'] = $res[$i]['image'] . "?" . time();
@@ -36,31 +36,20 @@ class Banner extends My_Admin_Controller
     {
         if (empty($this->input->post())) return new ErrorException("Not Found", "0");
 
-        $bannerC = [
-            "name" => $this->input->post("name"),
-            "description" => $this->input->post("description"),
-            "url" => $this->input->post("url"),
-            "deactiveDate" => $this->input->post("deactiveDate"),
-            "activeDate" => $this->input->post("activeDate"),
-            "type" => $this->input->post("type"),
-            "isShowName" => $this->input->post("isShowName") == "true" ? 1 : 0,
-            "isShowDescription" => $this->input->post("isShowDescription") == "true" ? 1 : 0,
-            "sortOrder" => $this->input->post("sortOrder")
-        ];
+        $bannerC = $this->input->post();
 
-        if ($bannerC['name'] == "" || $bannerC['activeDate'] == "" || $bannerC['type'] == "")
-            return $this->response($this->json_data(0, "Thêm banner thất bại"));
+        $bannerC['Id'] = ObjectId();
 
         $tmpAvatar = uploadImage("image", "banners", "tmp_" . time());
 
         try {
             $res = $this->Banner->create($bannerC);
 
-            moveFile($tmpAvatar, $res['image']);
+            // moveFile($tmpAvatar, $bannerC['Image']);
 
-            return $this->response($this->json_data(1, "Thêm banner thành công", ["returnUrl" => base_url("Admin/Banner")]));
+            return $this->response($this->json_data(1, "Thêm banner thành công", ["returnUrl" => base_url("Admin/Banner/index")]));
         } catch (Exception $e) {
-            unlink(PUBPATH . $tmpAvatar);
+            // unlink(PUBPATH . $tmpAvatar);
             return $this->response($this->json_data(0, "Thêm banner thất bại"));
         }
     }
@@ -86,7 +75,7 @@ class Banner extends My_Admin_Controller
         if ($res == NULL)
             return $this->response($this->json_data(0, "Cập nhật banner thất bại"));
 
-        return $this->response($this->json_data(1, "Cập nhật banner thành công", ["returnUrl" => base_url("Admin/Banner")]));
+        return $this->response($this->json_data(1, "Cập nhật banner thành công", ["returnUrl" => base_url("Admin/Banner/index")]));
     }
     public function changeShow()
     {

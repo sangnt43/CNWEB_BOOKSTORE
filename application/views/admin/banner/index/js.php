@@ -56,7 +56,7 @@
                 });
                 this.table.on("xhr", e => {
                     $(e.target).on("click", "input[name='isActive']", e => {
-                        let id = this.table.row($(e.target).parents('tr')).data()['id'];
+                        let id = this.table.row($(e.target).parents('tr')).data()['Id'];
                         let form = new FormData();
                         form.append("id", id);
                         form.append("ShowName", e.target.checked);
@@ -74,7 +74,7 @@
 
                     $(e.target).on("click", "a.btn-edit", e => {
                         let row = this.table.row($(e.target).parents('tr'));
-                        window.location.href = `<?= base_url() ?>Admin/Banner/edit/${row.data()['id']}`;
+                        window.location.href = `<?= base_url() ?>Admin/Banner/edit/${row.data()['Id']}`;
                     })
                     $(e.target).on("click", "a.btn-delete", e => {
                         let row = this.table.row($(e.target).parents('tr'));
@@ -89,7 +89,7 @@
                                 closeOnConfirm: false
                             },
                             function() {
-                                fetch("<?= base_url() ?>Admin/Banner/delete/" + row.data()['id'])
+                                fetch("<?= base_url() ?>Admin/Banner/delete/" + row.data()['Id'])
                                     .then(b => b.json()).then(c => {
                                         if (c.exitcode == 1) {
                                             row.remove().draw(false)
