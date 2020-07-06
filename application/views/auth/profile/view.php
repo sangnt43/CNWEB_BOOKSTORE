@@ -30,16 +30,16 @@
                         <input type="text" v-model="user['FullName']" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="">Địa chỉ</label>
-                        <input type="text" v-model="user['Address']" class="form-control">
-                    </div>
-                    <div class="form-group">
                         <label for="">Số điện thoại</label>
                         <input type="text" v-model="user['Phone']" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">Email</label>
                         <input type="text" v-model="user['Email']" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Địa chỉ</label>
+                        <textarea class="form-control" rows="2" v-model="user['Address']"></textarea>
                     </div>
                     <div v-if="isChange">
                         <button @click="tryChangProfile" class="btn btn-block btn-md p-2">Lưu</button>

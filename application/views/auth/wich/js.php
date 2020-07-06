@@ -5,6 +5,9 @@
         el: "#embed",
         data: {
             "wich": <?= json_encode($wich) ?>
+        },
+        methods: {
+
         }
     }
 </script>

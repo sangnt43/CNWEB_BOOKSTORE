@@ -58,6 +58,9 @@
                 <div class="btn-sec">
                     <button class="btn" @click="addItem">Thêm vào giỏ hàng</button>
                     <a @click="addItem" href="<?= base_url("cart") ?>" class="btn black">Mua ngay</a>
+                    <button @click="toogleWich" class="btn like">
+                        <i :class="'fa fa-heart'+(liked?'':'-o')"></i>
+                    </button>
                 </div>
             </div>
         </div>

@@ -53,7 +53,7 @@ export default {
   computed: {
     pageList() {
       let _ = [];
-      _.push({ page: 1, type: 0 });
+      if (this.totalPage > 0) _.push({ page: 1, type: 0 });
 
       if (this.currentPage > 3) _.push({ type: 1 });
 
@@ -72,7 +72,7 @@ export default {
 
       if (this.currentPage < this.totalPage - 2) _.push({ type: 1 });
 
-      if (this.totalPage != 1) _.push({ page: this.totalPage, type: 0 });
+      if (this.totalPage > 1) _.push({ page: this.totalPage, type: 0 });
 
       return _;
     }

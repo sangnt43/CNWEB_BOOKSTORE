@@ -62,7 +62,7 @@
                 return JSON.stringify(this.user) != JSON.stringify(this.$data._user);
             },
             canChangePassword() {
-                return this.password.new.length > 5 && this.password.new.trim() != "" &&
+                return this.password.new.length > 4 && this.password.new.trim() != "" &&
                     this.password.new != this.password.old && this.password.new == this.password.cnew;
             }
         },
@@ -102,7 +102,7 @@
                         break;
 
                     default:
-                        showNoti("Thành công", "danger");
+                        showNoti("Thành công", "success");
                         break;
                 }
             },

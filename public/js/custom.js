@@ -33,3 +33,18 @@ const showNoti = function(message, type) {
     if (type == "danger") type = 'error';
     $.notify(message, type);
 }
+
+function set_cookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function get_cookie(cname) {
+    var name = cname + "=";
+    for (let item of document.cookie.split(';'))
+        if (item.trim().indexOf(name) != -1)
+            return item.trim().substring(name.length);
+    return "";
+}

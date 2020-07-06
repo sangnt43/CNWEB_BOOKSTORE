@@ -1,9 +1,9 @@
 <?php
 
 if (!function_exists("save")) {
-    function save($data, $isAdmin = true)
+    function save($data, $isAdmin = false)
     {
-        get_instance()->session->set_userdata($isAdmin == true ? "My_Admin" : "MY_User", $data);
+        get_instance()->session->set_userdata($isAdmin == true ? "My_Admin" : "My_User", $data);
     }
 }
 
@@ -11,6 +11,7 @@ if (!function_exists("currentUser")) {
     function currentUser()
     {
         $session = get_instance()->session;
+        
         if (!$session->has_userdata("My_User"))
             return NULL;
         return $session->userdata("MY_User");

@@ -9,7 +9,7 @@ class User_Model extends My_Model
     private function _map($data)
     {
         if (empty($data)) return NULL;
-        if (file_exists(PUBPATH . $data["Image"]))
+        if (isset($data["Image"]) && file_exists(PUBPATH . $data["Image"]))
             $data["Avatar"] = base_url("public/" . $data["Avatar"]);
         else $data["Avatar"] = base_url("public/avatar/default.jpg");
         return $data;

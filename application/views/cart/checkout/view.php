@@ -5,7 +5,7 @@
                 <div class="card my-4">
                     <div class="card-header">
                         MÃ KHUYẾN MÃI/MÃ QUÀ TẶNG
-                        <button class="close btn px-2 py-1" style="background: blue;" data-toggle="collapse" href="#voucher" role="button" aria-expanded="false" aria-controls="voucher">
+                        <button @click.prevent class="close btn px-2 py-1" style="background: blue;" data-toggle="collapse" href="#voucher" role="button" aria-expanded="false" aria-controls="voucher">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
@@ -16,7 +16,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         ĐỊA CHỈ GIAO HÀNG
-                        <button class="close btn px-2 py-1" style="background: blue;" data-toggle="collapse" href="#shipping-info" role="button" aria-expanded="false" aria-controls="shipping-info">
+                        <button @click.prevent class="close btn px-2 py-1" style="background: blue;" data-toggle="collapse" href="#shipping-info" role="button" aria-expanded="false" aria-controls="shipping-info">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
@@ -61,7 +61,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         GHI CHÚ
-                        <button class="close btn px-2 py-1" style="background: blue;" data-toggle="collapse" href="#note" role="button" aria-expanded="false" aria-controls="note">
+                        <button @click.prevent class="close btn px-2 py-1" style="background: blue;" data-toggle="collapse" href="#note" role="button" aria-expanded="false" aria-controls="note">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>

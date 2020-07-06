@@ -25,7 +25,8 @@
 
         if (typeof vue_js == 'undefined') vue_js = {
             el: "#embed",
-            data: {}
+            data: {},
+            methods: {}
         }
 
         vue_js['data']['cart'] = null;

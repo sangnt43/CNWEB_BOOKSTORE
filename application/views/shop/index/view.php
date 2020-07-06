@@ -10,7 +10,7 @@
     <div class="container">
         <h2 class="text-center" style="position: relative; top: 10px">{{pageTitle}}</h2>
         <hr>
-        <div class="recent-book-sec" v-if="books">
+        <div class="recent-book-sec" v-if="books && books.length > 0">
             <div class="row">
                 <div class="col-md-3" v-for="(item,index) in books" :key="index">
                     <shop-item :item="item"></shop-item>

@@ -124,6 +124,16 @@ section {
     color: #252525;
 }
 
+.like {
+    color: red;
+    background: white;
+    padding: 5px 10px;
+}
+
+.like:hover .fa.fa-heart {
+    color: white;
+}
+
 img {
     max-width: 100%;
 }

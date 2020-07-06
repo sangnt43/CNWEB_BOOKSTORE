@@ -8,7 +8,11 @@ class Order_Model extends My_Model
     }
     public function get(?string $id = null)
     {
-        return $this->db->get_where($this->table, ["Id" => $id])->row_array();
+        if (!empty(currentUser()))
+            return $this->db->get_where($this->table, ["Id" => $id, "CustomerInfo_Id" => currentUser()['Id']])->row_array();
+        else if (!empty(currentAdmin()))
+            return $this->db->get_where($this->table, ["Id" => $id])->row_array();
+        return $this->db->get_where($this->table, ["Id" => $id, "StatusId !=", "000000000000000000000000"])->row_array();
     }
     public function getBooksByOrder($id)
     {

@@ -32,7 +32,7 @@ class Auth extends My_Controller
             if (empty($res)) {
                 $data['username'] = $this->input->post("username");
                 $data["success"] = "0";
-                $data["message"] = "Thất bại";
+                $data["message"] = "Tài khoản hoặc mật khẩu sai";
             } else {
                 save($res);
 
@@ -81,16 +81,20 @@ class Auth extends My_Controller
         if (empty(currentUser())) show_404();
 
         $user = [
-            "Fullname" => $this->input->post("Fullname"),
+            "FullName" => $this->input->post("FullName"),
             "Address" => $this->input->post("Address"),
             "Phone" => $this->input->post("Phone"),
             "Email" => $this->input->post("Email")
         ];
 
+
         $res = $this->repo->changeProfile($user);
 
         // error
         if ($res == 0) {
+
+            debug($res);
+
             echo json_encode([
                 "success" => 0,
                 "message" => "Thất Bại"
@@ -98,6 +102,7 @@ class Auth extends My_Controller
         } else {
             foreach ($user as $key => $value)
                 $_SESSION['My_User'][$key] = $value;
+
             echo json_encode([
                 "success" => 1,
                 "message" => "Thành Công"
@@ -108,8 +113,7 @@ class Auth extends My_Controller
     {
         if (empty(currentUser())) show_404();
 
-        $data["user"] = currentUser();
-        // $this->repo->getCurrentUser();
+        $data["user"] = $this->repo->getCurrentUser();
 
         $this->push_breadcrum("Thông tin tài khoản");
         if (!IsAjax()) {

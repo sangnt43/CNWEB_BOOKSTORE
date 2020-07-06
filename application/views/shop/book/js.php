@@ -7,10 +7,17 @@
             book: <?= json_encode($book) ?>,
             base_url: "",
             recommendes: <?= json_encode($recommendes) ?>,
-            quantity: 1
+            quantity: 1,
+            wich: []
         },
         created() {
             this.base_url = document.querySelector("meta[name='base_url']").dataset['value'];
+            this.wich = get_cookie("wich").split(',');
+        },
+        computed: {
+            liked() {
+                return this.wich.indexOf(this.book['Id']) != -1;
+            }
         },
         methods: {
             async onClick(item) {
@@ -23,6 +30,12 @@
             },
             addItem() {
                 this.$refs['shop-cart'].push(this.book, this.quantity);
+            },
+            toogleWich() {
+                let index = this.wich.indexOf(this.book["Id"]);
+                if (index != -1) this.wich.splice(index, 1);
+                else this.wich.push(this.book["Id"]);
+                set_cookie("wich", this.wich.join(","));
             }
         }
     }
