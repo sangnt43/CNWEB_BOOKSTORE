@@ -67,12 +67,14 @@ if (!function_exists('multiexplode')) {
         return  $launch;
     }
 }
+
 if (!function_exists("makeEditable")) {
     function makeEditable($path)
     {
         if (!is_writable($path)) chmod($path, 0750);
     }
 }
+
 if (!function_exists('createDirectory')) {
     function createDirectory($path)
     {
@@ -93,5 +95,48 @@ if (!function_exists('createDirectory')) {
             tryCreateDirectory($path);
             $path .= "/";
         }
+    }
+}
+
+if (!function_exists("uploadFile")) {
+    function uploadFile($name, $path = "images", $filename = null, $width = 1200, $height = 800)
+    {
+        $ci = get_instance();
+
+        $config['upload_path']          = $path;
+        $config['overwrite']            = TRUE;
+        if (!empty($filename))
+            $config['file_name']        = $filename;
+        $config['allowed_types']        = 'gif|jpg|png|jpeg|webp';
+        $config['max_size']             = 5 * 1024;
+        $config['max_width']            = 1024;
+        $config['max_height']           = 768;
+
+        $ci->load->library('upload', $config);
+
+        if (!$ci->upload->do_upload($name))
+            return [
+                "success" => "0",
+                "error" =>  $ci->upload->display_errors()
+            ];
+        else
+            return [
+                "success" => 1,
+                "data" => $ci->upload->data()
+            ];
+    }
+}
+
+if (!function_exists("moveFile")) {
+    function moveFile()
+    {
+    }
+}
+
+if (!function_exists("deleteFile")) {
+    function deleteFile($path)
+    {
+        if (is_file($path))
+            unlink($path);
     }
 }

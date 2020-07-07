@@ -1,0 +1,1 @@
+Vue.component('v-select', require('./components/v-select.vue').default);

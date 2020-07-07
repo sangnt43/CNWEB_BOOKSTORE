@@ -48,3 +48,28 @@ function get_cookie(cname) {
             return item.trim().substring(name.length);
     return "";
 }
+
+$(document).ready(function() {
+    if ($("#owl-demo")) {
+        $("#owl-demo").owlCarousel({
+            navigation: true, // Show next and prev buttons
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            singleItem: true,
+            items: 1,
+            autoPlay: 3000,
+            loop: true,
+        });
+    }
+    if ($("#testimonal")) {
+        $("#testimonal").owlCarousel({
+            navigation: true, // Show next and prev buttons
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            singleItem: true,
+            items: 1,
+            autoPlay: 3000,
+            loop: true,
+        });
+    }
+});

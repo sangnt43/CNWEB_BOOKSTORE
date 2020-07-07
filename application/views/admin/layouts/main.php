@@ -20,6 +20,15 @@
     </div>
   </section>
   <?php include("foot.php"); ?>
+
+  <script>
+    if (typeof vue_js == 'undefined') vue_js = {
+      el: "#embed",
+      data: {},
+      methods: {}
+    }
+    vm = new Vue(vue_js), vue_js = undefined;
+  </script>
 </body>
 
 </html>

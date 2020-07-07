@@ -14,7 +14,6 @@
           </div>
         </div>
       </div>
-
       <div class="dropdown-menu">
         <a class="dropdown-item" href="<?= base_url() ?>">Trở về</a>
         <a class="dropdown-item" href="<?= base_url() ?>Admin/Auth/logout">Đăng xuất</a>

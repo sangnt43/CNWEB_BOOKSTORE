@@ -5,96 +5,117 @@ class Banner extends My_Admin_Controller
     {
         parent::__construct();
         $this->__LAYOUT__ = "main";
-        $this->load->model("Banner_model", "Banner");
+        $this->load->model("Banner_model", "repo");
     }
-    public function getAll()
-    {
-        $res = $this->Banner->getAll();
-        for ($i = 0; $i < count($res); $i++)
-            if (isset($res[$i]['image']))
-                $res[$i]['image'] = $res[$i]['image'] . "?" . time();
-        echo json_encode(["data" => $res]);
-    }
-    public function getById($id)
-    {
-        $data = $this->Banner->getById($id);
-        if ($data == NULL)
-            return $this->response($this->json_data(0, "Thể loại không tồn tại"));
-        if (isset($data['image']))
-            $data['image'] = $data['image'] . "?" . time();
-        return $this->response($this->json_data(1, "Tìm thấy", $data));
-    }
+
     public function index()
     {
-        $this->view("index");
+        $data['banners'] = $this->repo->getAll();
+
+        return $this->view("index", $data);
     }
     public function add()
     {
-        $this->view("add");
-    }
-    public function createBanner()
-    {
-        if (empty($this->input->post())) return new ErrorException("Not Found", "0");
-
-        $bannerC = $this->input->post();
-
-        $bannerC['Id'] = ObjectId();
-
-        $tmpAvatar = uploadImage("image", "banners", "tmp_" . time());
-
-        try {
-            $res = $this->Banner->create($bannerC);
-
-            // moveFile($tmpAvatar, $bannerC['Image']);
-
-            return $this->response($this->json_data(1, "Thêm banner thành công", ["returnUrl" => base_url("Admin/Banner/index")]));
-        } catch (Exception $e) {
-            // unlink(PUBPATH . $tmpAvatar);
-            return $this->response($this->json_data(0, "Thêm banner thất bại"));
+        $data = [];
+        if (!empty($this->input->post())) {
+            $res = $this->_add();
+            if (empty($res)) redirect(base_url("Admin/Banner/index"));
+            else $data['error'] = $res;
         }
+
+        return $this->view("add", $data);
     }
+
+    private function _add()
+    {
+        $error = [];
+        $id = ObjectId();
+
+        $banner = [
+            "Id" => $id,
+            "Title" => $this->input->post("Title"),
+            "Content" => $this->input->post("Content"),
+            "Url" => $this->input->post("Url"),
+            "btn_text" => $this->input->post("btn_text"),
+            "IsActive" => empty($this->input->post("IsActive")) ? 0 : 1
+        ];
+
+        $upload = uploadFile("Image", PUBPATH . "banners", $id);
+
+        if ($upload['success'] == 0) $error["upload"] = $upload['error'];
+        else $banner['Image'] = "banners/" . $upload['data']["file_name"];
+
+        if (isset($banner['Image'])) $res = $this->repo->create($banner);
+        else $error['data'] = $banner;
+
+        return $error;
+    }
+
     public function edit($id)
     {
-        if (!isset($id)) redirect("Admin/Banner");
-        $this->view("edit", ['id' => $id]);
+        $data['banner'] = $this->repo->get($id);
+
+        if (empty($data['banner']))
+            redirect(base_url("Admin/Banner/index"));
+
+        if (!empty($this->input->post())) {
+            $res = $this->_edit($id);
+
+            if (empty($res)) redirect(base_url("Admin/Banner/index")); // added
+            else $data['error'] = $res;
+        }
+
+        return $this->view("edit", $data);
     }
-    public function updateBanner($id)
+
+    private function _edit($id)
     {
-        if (!isset($id)) return;
-        $image = uploadImage("image", "banners", $id);
-        if (empty($this->input->post()) && !isset($image)) return new ErrorException("Not Found", "0");
+        $error = [];
 
-        $banner = ($this->input->post());
-        $banner['isShowName'] = $banner['isShowName'] == 'true' ? 1 : 0;
-        $banner['isShowDescription'] = $banner['isShowDescription'] == 'true' ? 1 : 0;
-        if (isset($image))
-            $banner['image'] = $image;
+        $banner = [
+            "Title" => $this->input->post("Title"),
+            "Content" => $this->input->post("Content"),
+            "Url" => $this->input->post("Url"),
+            "btn_text" => $this->input->post("btn_text"),
+            "IsActive" => empty($this->input->post("IsActive")) ? 0 : 1
+        ];
 
-        $res = ($this->Banner->update($id, $banner));
+        if (isset($_FILES["Image"]) && !empty($_FILES["Image"]['name'])) {
+            $upload = uploadFile("Image", PUBPATH . "banners", $id);
+            if ($upload['success'] == 0) $error["upload"] = $upload['error'];
+            else $banner['Image'] = "banners/" . $upload['data']["file_name"];
+        }
 
-        if ($res == NULL)
-            return $this->response($this->json_data(0, "Cập nhật banner thất bại"));
+        $res = $this->repo->update($id, $banner);
 
-        return $this->response($this->json_data(1, "Cập nhật banner thành công", ["returnUrl" => base_url("Admin/Banner/index")]));
+        return $error;
     }
-    public function changeShow()
-    {
-        if (empty($this->input->post())) return new ErrorException("Not Found", "0");
 
-        if ($this->input->post("ShowName") != '')
-            $data = ["isShowName" => $this->input->post("ShowName")];
-        else if ($this->input->post("ShowDescription") != '')
-            $data = ["isShowDescription" => $this->input->post("ShowDescription")];
-
-        if ($this->Banner->changeShow($this->input->post("id"), $data) != NULL)
-            return  $this->response($this->json_data(1, "Cập nhật trạng thái thành công"));
-        else $this->response($this->json_data(0, "Cập nhật trạng thái thất bại"));
-    }
     public function delete($id)
     {
-        if (!isset($id)) return;
-        if ($this->Banner->delete($id) != NULL)
-            return  $this->response($this->json_data(1, "Xóa thể loại banner thành công"));
-        else $this->response($this->json_data(0, "Xóa thể loại banner thất bại"));
+        $model = $this->repo->get($id);
+
+        if (isset($model['Id'])) {
+            if (is_file(PUBPATH . $model["Image"]))
+                unlink(PUBPATH . $model["Image"]);
+            $this->repo->delete($id);
+            echo '{"exitcode":"200","message":"thành công"}';
+        } else {
+            echo '{"exitcode":"204","message":"thất bại"}';
+        }
+    }
+
+    public function changeActive($id)
+    {
+        $model = $this->repo->get($id);
+
+        if (isset($model['Id'])) {
+            $res = $this->repo->update($id, ['IsActive' => $this->input->post('IsActive')]);
+            if (!empty($res)) {
+                echo '{"exitcode":"200","message":"thành công"}';
+                return;
+            }
+        }
+        echo '{"exitcode":"204","message":"thất bại"}';
     }
 }

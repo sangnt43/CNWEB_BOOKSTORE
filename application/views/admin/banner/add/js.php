@@ -1,83 +1,44 @@
 <script>
-    var vm = new Vue({
-        el: '#main-wrapper',
-        data() {
-            return {
-                banner: {
-                    Title: '',
-                    Content: '',
-                    Image: null,
-                    Url: '',
-                    isAcive: false,
-                },
-                bannerError: [],
+    vue_js = {
+        el: "#main-wrapper",
+        data: {
+            banner: {
+                Title: "",
+                Content: "",
+                IsActive: true,
+                Url: "",
+                btn_text: "Show more"
             }
         },
         mounted() {
-            this.$nextTick(() => {
-                $("form").bind("keypress", e => (e.keyCode != 13));
-            })
+            <?php if (isset($error)) : ?>
+                <?php if (isset($error['upload'])) : ?>
+                    showNoti("<?= $error['upload'] ?>", "Không thể thêm");
+                <?php elseif (isset($error['data'])) : ?>
+                    showNoti("Dự liệu không phù hợp", "Không thể thêm");
+
+                    this.banner = <?= json_encode($error['data']) ?>
+                <?php endif; ?>
+            <?php endif; ?>
         },
         methods: {
-            preview(e) {
-                let file = URL.createObjectURL(e.target.files[0]);
-                if (e.target.files[0].size / (1024 * 1024) > 10) {
-                    swal("Fail!", "Your picture is too large!", "error");
-                    return;
+            preview() {
+                var file = event.target.files[0];
+                if (file.size / (1024 * 1024) > 5)
+                    showNoti("Kích thước quá to", "Kích thước quá to", "error");
+                else
+                    this.$refs['preview'].src = URL.createObjectURL(file);
+            },
+            onSubmit() {
+                let isError = false;
+
+                if (!document.querySelector('input[name="Image"]').files[0]) {
+                    showNoti("Banner Không thể để rỗng", "Chưa chọn hình ảnh", "error");
+                    isError = true;
                 }
-                this.banner.Image = e.target.files[0];
-                this.$refs['preview'].setAttribute("src", file);
-            },
-            checkValidate() {
-                this.bannerError = [];
 
-                if (this.banner.Image == null) this.bannerError.push('image');
-                if (this.banner.Title.trim() == '') this.bannerError.push('name');
-                if (this.banner.Content == '') this.bannerError.push('description');
-
-                return this.bannerError.length == 0;
-            },
-            sendData() {
-                if (!this.checkValidate()) return;
-                
-                let form = new FormData();
-                form.append("Title", this.banner.Title);
-                form.append("Content", this.banner.Content);
-                form.append("Image", this.banner.Image);
-                form.append("Url", this.banner.Url);
-                form.append("isActive", this.banner.isActive);
-
-                fetch("<?= base_url() ?>Admin/banner/createBanner", {
-                    method: "POST",
-                    mode: "same-origin",
-                    body: form
-                }).then(b => b.json()).then(b => {
-                    if (b.exitcode == 1) {
-                        //success
-                        swal({
-                            title: "Thêm thành công",
-                            type: "success",
-                            timer: 500,
-                            showConfirmButton: false
-                        }, function() {
-                            window.location.href = b.data.returnUrl
-                        })
-                    } else {
-                        // error
-                        swal({
-                            title: "Không thể thêm được",
-                            type: "error",
-                            timer: 500
-                        })
-                    }
-                });
-            },
-            isError(e) {
-                return this.bannerError.length != 0 && this.bannerError.indexOf(e) != -1
-            },
-            makeUrl(title) {
-                return title.toLowerCase().trim().replace(/[áàảãạăắằẳẵặâấầẩẫậ]/g, 'a').replace(/[óòỏõọôốồổỗộơớờởỡợ]/g, 'o').replace(/[éèẻẽẹêếềểễệ]/g, 'e').replace(/[íìỉĩị]/g, 'i').replace(/[úùủũụưứừửữự]/g, 'u').replace(/[ýỳỷỹỵ]/g, 'y').replace(/[đ]/g, 'd').replace(/[^a-z0-9- ]/g, '').replace(/[ ]/g, '-').replace(/[--]+/g, '-');
+                if (isError) event.preventDefault();
             }
-        },
-    })
+        }
+    }
 </script>
