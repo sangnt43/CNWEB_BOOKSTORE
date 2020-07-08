@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $route['GetObjectId'] = "GetObjectId";
 
-$route['[Aa]dmin'] = "Admin/Order/index";
+$route['[Aa]dmin'] = "Admin/Dashboard";
 $route['[Aa]dmin/login']['get'] = "Admin/Auth/index";
 $route['[Aa]dmin/login']['post'] = "Admin/Auth/login";
 $route['[Aa]dmin/logout'] = "Admin/Auth/logout";
@@ -38,8 +38,8 @@ $route['shipping-return'] = "Infomation/shippingReturn";
 $route['terms-condition'] = "Infomation/termsCondition";
 
 $route['all'] = "Shop/getAll";
-$route['(:any)'] = "Shop/category/$1";
-$route['(:any)/(:any)'] = "Shop/get/$1/$2";
+$route['((?!([Aa]dmin))[^\/]+)'] = "Shop/category/$1";
+$route['((?!([Aa]dmin))[^\/]+)/(:any)'] = "Shop/get/$1/$2";
 
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';

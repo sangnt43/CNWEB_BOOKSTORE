@@ -14,7 +14,7 @@
                         <img ref="preview" v-once :src="banner['Image']" alt="" width="256px" height="144px"></a>
                     <div class="form-line">
                         <br>
-                        <label style="font-style: italic;" for="fullname">Chọn ảnh bìa (<small>Kích thước đề nghị cho trang chủ: 1024×683  - Với các định dạng gif | jpg | png | jpeg</small>)</label>
+                        <label style="font-style: italic;" for="fullname">Chọn ảnh bìa (<small>Kích thước đề nghị cho trang chủ: 1024×683 - Với các định dạng gif | jpg | png | jpeg</small>)</label>
                         <br>
                     </div>
                 </div>
@@ -66,5 +66,5 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-block btn-sm bg-red text-white waves-effect"><strong>Chỉnh sửa</strong></button>
+    <button type="submit" class="btn btn-block btn-sm bg-red text-white waves-effect"><strong>Cập nhật</strong></button>
 </form>

@@ -6,6 +6,7 @@
       :disabled="disabled"
       :required="required"
       :multiple="multiple"
+      :name="name"
     ></select>
   </div>
 </template>
@@ -48,7 +49,8 @@ export default {
       type: Object,
       default: () => {}
     },
-    value: null
+    value: null,
+    name: null
   },
   watch: {
     options(val) {

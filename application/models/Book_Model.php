@@ -18,18 +18,20 @@ class Book_Model extends My_Model
 
         if (isset($data['Id'])) {
             $data['Avatar'] = $this->_mapImage($data['Avatar']);
-            $data['Seo'] = base_url("$data[Seo]");
+            $data['Seo'] = empty(currentAdmin()) ? base_url("$data[Seo]") : $data['Seo'];
             if ($isShort == TRUE) {
                 unset($data['Images']);
                 unset($data['Info_Auth']);
                 unset($data['Info_PublisherId']);
                 $str = explode(' ', $data['Name']);
 
-                if (count($str) > 4)
+                if (empty(currentAdmin()) && count($str) > 4)
                     $data['Name'] = join(" ", array_splice($str, 0, 4)) . "...";
             }
-            if (!empty($data['Images']))
+            if (!empty($data['Images']) && empty(currentAdmin()))
                 $data['Images'] = array_map(array($this, "_mapImage"), explode(',', $data['Images']));
+            else if (!empty($data['Images']))
+                $data['Images'] = explode(',', $data['Images']);
         } else {
             $data = array_map(array($this, "_map"), $data);
         }
@@ -63,26 +65,26 @@ class Book_Model extends My_Model
     {
         if ($id == null)
             return $this->_map(
-                $this->db->get($this->table)->result_array(),
+                $this->db
+                    ->order_by('books.Id', "DESC")
+                    ->get($this->table)->result_array(),
                 true
             );
-        return
-            $this->_map(
-                $this->db
-                    ->select([
-                        "books.*",
-                        "book_authors.Name as Auth",
-                        "book_categories.Name as Category_Name",
-                        "book_categories.Seo as Category_Seo",
-                        "publishers.Name as Publisher"
-                    ])
-                    ->join("book_authors", "book_authors.Id = books.Info_Auth")
-                    ->join("book_categories", "book_categories.Id = books.BookCategoryId")
-                    ->join("publishers", "publishers.Id = books.Info_PublisherId")
-                    ->get_where($this->table, ["books.Id" => $id])->row_array(),
-                false
-            );
+        $data = $this->db
+            ->select([
+                "books.*",
+                "book_authors.Name as Auth",
+                "book_categories.Name as Category_Name",
+                "book_categories.Seo as Category_Seo",
+                "publishers.Name as Publisher"
+            ])
+            ->join("book_authors", "book_authors.Id = books.Info_Auth", "LEFT")
+            ->join("book_categories", "book_categories.Id = books.BookCategoryId", "LEFT")
+            ->join("publishers", "publishers.Id = books.Info_PublisherId", "LEFT")
+            ->get_where($this->table, ["books.Id" => $id])->row_array();
+        return $this->_map($data, false);
     }
+
 
     public function getAllShort()
     {

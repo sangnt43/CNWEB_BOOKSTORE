@@ -30,13 +30,13 @@
         </a>
         <ul>
           <li class="<?= isCurrentController("User") ? "navigation__active" : "" ?>">
-            <a href="<?= base_url() ?>Admin/User/index">
+            <a href="<?= base_url() ?>Admin/User">
               <i class="zmdi zmdi-account zmdi-hc-fw"></i>
               Quản lý tài khoản
             </a>
           </li>
           <li class="<?= isCurrentController("Group") ? "navigation__active" : "" ?>">
-            <a href="<?= base_url() ?>Admin/Group/index">
+            <a href="<?= base_url() ?>Admin/Group">
               <i class="zmdi zmdi-accounts zmdi-hc-fw"></i>
               Quản lý nhóm
             </a>
@@ -50,13 +50,13 @@
         </a>
         <ul>
           <li class="<?= isCurrentController("Book") ? "navigation__active" : "" ?>">
-            <a href="<?= base_url() ?>Admin/Book/index">
+            <a href="<?= base_url() ?>Admin/Book">
               <i class="zmdi zmdi-shopping-cart zmdi-hc-fw"></i>
               Quản lý sản phẩm
             </a>
           </li>
           <li class="<?= isCurrentController("BookCategory") ? "navigation__active" : "" ?>">
-            <a href="<?= base_url() ?>Admin/BookCategory/index">
+            <a href="<?= base_url() ?>Admin/BookCategory">
               <i class="zmdi zmdi-menu zmdi-hc-fw"></i>
               Quản lý loại sản phẩm
             </a>
@@ -64,13 +64,13 @@
         </ul>
       </li>
       <li class="<?= (isCurrentController("Order")) ? "navigation__active" : "" ?>">
-        <a href="<?= base_url() ?>Admin/Order/index"><i class="zmdi zmdi-truck"></i>Đặt hàng</a>
+        <a href="<?= base_url() ?>Admin/Order"><i class="zmdi zmdi-truck"></i>Đặt hàng</a>
       </li>
       <li class="<?= (isCurrentController("Banner")) ? "navigation__active" : "" ?>">
-        <a href="<?= base_url() ?>Admin/Banner/index"><i class="zmdi zmdi-wallpaper"></i>Banner</a>
+        <a href="<?= base_url() ?>Admin/Banner"><i class="zmdi zmdi-wallpaper"></i>Banner</a>
       </li>
       <li class="<?= (isCurrentController("Information")) ? "navigation__active" : "" ?>">
-        <a href="<?= base_url() ?>Admin/Information/index"><i class="zmdi zmdi-info"></i>Thông tin</a>
+        <a href="<?= base_url() ?>Admin/Information"><i class="zmdi zmdi-info"></i>Thông tin</a>
       </li>
     </ul>
   </div>

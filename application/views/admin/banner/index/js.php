@@ -41,7 +41,7 @@
                             })
                             .then(b => b.json()).then(c => {
                                 if (c.exitcode == 200) {
-                                    let mytable = $("#data-table").DataTable();
+                                    let mytable = $("#__table__").DataTable();
                                     mytable.row($("#" + item['Id'])).remove().draw(false);
 
                                     this.banners.splice(this.banners.findIndex(x => x['Id'] == item['Id']), 1);

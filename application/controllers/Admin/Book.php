@@ -7,100 +7,133 @@ class Book extends MY_Admin_Controller
         parent::__construct();
 
         $this->__LAYOUT__ = "main";
-        $this->load->model("Book_Model", "Book");
+        $this->load->model("Book_Model", "repo");
+        $this->load->model("Auth_Model");
+        $this->load->model("Publisher_Model");
     }
+
     public function index()
     {
-        return $this->view("index");
+        $data['books'] = $this->repo->get();
+        return $this->view("index", $data);
     }
-    public function getAll()
-    {
-        echo json_encode(["data" => $this->Book->getAllShort()]);
-    }
-    public function getById($id)
-    {
-        if (!isset($id)) return;
-        $data = $this->Book->get($id);
-        if ($data == NULL)
-            return $this->response($this->json_data(0, "sản phẩm không tồn tại"));
-        if (isset($data['avatar']))
-            $data['avatar'] = $data['avatar'] . "?" . time();
-        return $this->response($this->json_data(1, "Tìm thấy", $data));
-    }
+
     public function add()
     {
-        return $this->view("add");
+        $data = [];
+        if (!empty($this->input->post())) {
+            $res = $this->_add();
+            if (empty($res)) redirect(base_url("Admin/Book"));
+            else $data['error'] = $res;
+        }
+
+        $data['authes'] = $this->Auth_Model->get();
+        $data['publishers'] = $this->Publisher_Model->get();
+
+        return $this->view("add", $data);
     }
-    public function createBook()
+
+    private function _add()
     {
-        if (empty($this->input->post())) return new ErrorException("Not Found", "0");
-        $Book = [
-            "id" => ObjectId(),
-            "name" => $this->input->post("name"),
-            "description" => $this->input->post("description"),
-            "images" => $this->input->post("imageList"),
-            "bookCategory" => $this->input->post("BookCategory"),
-            "price" => $this->input->post("price"),
-            "quantity" => $this->input->post("quantity"),
-            "seo" => $this->input->post("seo"),
+        $error = [];
+        $id = ObjectId();
+
+        $book = [
+            "Id" => $id,
+            "Name" => $this->input->post("Name"),
+            "Description" => $this->input->post("Description"),
+            "BookCategoryId" => $this->input->post("BookCategoryId"),
+            "Images" => $this->input->post("Images"),
+            "Seo" => $this->input->post("Seo"),
+            "Discount" => $this->input->post("Discount"),
+            "Price" => $this->input->post("Price")
         ];
 
-        if ($Book['name'] == "" || $Book['BookCategory'] == "")
-            return $this->response($this->json_data(0, "Thêm sản phẩm thất bại"));
+        if ($this->input->post("AuthId") != "")
+            $book['Info_Auth'] = $this->input->post("AuthId");
+        else $book['Info_Auth'] = $this->Auth_Model->create($this->input->post("Auth"));
 
-        $tmpAvatar = uploadImage("avatar", "Books", $Book['id']);
+        if ($this->input->post("PublisherId") != "")
+            $book['Info_PublisherId'] = $this->input->post("PublisherId");
+        else $book['Info_PublisherId'] = $this->Publisher_Model->create($this->input->post("Publisher"));
 
-        if ($tmpAvatar ==  NULL)
-            return $this->response($this->json_data(2, "Ảnh sai định dạng"));
+        if (isset($_FILES["Avatar"]) && !empty($_FILES["Avatar"]['name'])) {
+            $upload = uploadFile("Avatar", PUBPATH . "images", $id, 800, 1200);
+            if ($upload['success'] == 0) $error["upload"] = $upload['error'];
+            else $book['Avatar'] = "images/" . $upload['data']["file_name"];
+        } else $book['Avatar'] = "images/default.jpg";
 
-        try {
-            $res = $this->Book->create($Book);
+        $res = $this->repo->create($book);
 
-            moveFile($tmpAvatar, $res['avatar']);
+        if ($res == 0) $error['data'] = $book;
 
-            return $this->response($this->json_data(1, "Thêm sản phẩm thành công", ["returnUrl" => base_url("Admin/Book")]));
-        } catch (Exception $e) {
-            unlink(PUBPATH . $tmpAvatar);
-            return $this->response($this->json_data(0, "Thêm sản phẩm thất bại"));
-        }
+        return $error;
     }
+
     public function edit($id)
     {
-        if (!isset($id)) redirect("Admin/Book");
-        $this->view("edit", ['id' => $id]);
+        $data['book'] = $this->repo->get($id);
+
+        if (empty($data['book']))
+            redirect(base_url("Admin/Book"));
+
+        if (!empty($this->input->post())) {
+            $res = $this->_edit($id);
+
+            if (empty($res)) redirect(base_url("Admin/Book")); // added
+            else $data['error'] = $res;
+        }
+
+        $data['authes'] = $this->Auth_Model->get();
+        $data['publishers'] = $this->Publisher_Model->get();
+
+        return $this->view("edit", $data);
     }
-    public function updateBook($id)
+
+    private function _edit($id)
     {
-        if (!isset($id)) return;
-        $avatar = uploadImage("avatar", "Books", $id);
+        $error = [];
 
-        if (empty($this->input->post()) && !isset($avatar)) return new ErrorException("Not Found", "0");
+        $book = [
+            "Name" => $this->input->post("Name"),
+            "Description" => $this->input->post("Description"),
+            "BookCategoryId" => $this->input->post("BookCategoryId"),
+            "Images" => $this->input->post("Images"),
+            "Seo" => $this->input->post("Seo"),
+            "Discount" => $this->input->post("Discount"),
+            "Price" => $this->input->post("Price")
+        ];
 
-        $Book = ($this->input->post());
+        if ($this->input->post("AuthId") != "") $book['Info_Auth'] = $this->input->post("AuthId");
+        else $book['Info_Auth'] = $this->Auth_Model->create($this->input->post("Auth"));
 
-        if ($avatar != NULL)
-            $Book['avatar'] = $avatar;
+        if ($this->input->post("PublisherId") != "") $book['Info_PublisherId'] = $this->input->post("PublisherId");
+        else $book['Info_PublisherId'] = $this->Publisher_Model->create($this->input->post("Publisher"));
 
-        $res = ($this->Book->update($id, $Book));
+        if (isset($_FILES["Avatar"]) && !empty($_FILES["Avatar"]['name'])) {
+            $upload = uploadFile("Avatar", PUBPATH . "images", $id, 800, 1200);
+            if ($upload['success'] == 0) $error["upload"] = $upload['error'];
+            else $book['Avatar'] = "images/" . $upload['data']["file_name"];
+        }
 
-        if ($res == NULL)
-            return $this->response($this->json_data(0, "Cập nhật sản phẩm thất bại"));
+        $res = $this->repo->update($id, $book);
 
-        return $this->response($this->json_data(1, "Cập nhật sản phẩm thành công", ["returnUrl" => base_url("Admin/Book")]));
+        if ($res == 0 && $_FILES['Avatar']['name'] == '') $error['data'] = $book;
+
+        return $error;
     }
-    public function changeActive()
-    {
-        if (empty($this->input->post())) return new ErrorException("Not Found", "0");
 
-        if ($this->Book->changeActive($this->input->post("id"), $this->input->post("value")) != NULL)
-            return  $this->response($this->json_data(1, "Cập nhật trạng thái thành công"));
-        else $this->response($this->json_data(0, "Cập nhật trạng thái thất bại"));
-    }
     public function delete($id)
     {
-        if (!isset($id)) return;
-        if ($this->Book->delete($id) != NULL)
-            return  $this->response($this->json_data(1, "Xóa sản phẩm thành công"));
-        else $this->response($this->json_data(0, "Xóa sản phẩm thất bại"));
+        $model = $this->repo->get($id);
+
+        if (isset($model['Id'])) {
+            if (is_file(PUBPATH . $model["Avatar"]))
+                unlink(PUBPATH . $model["Avatar"]);
+            $this->repo->delete($id);
+            echo '{"exitcode":"200","message":"thành công"}';
+        } else {
+            echo '{"exitcode":"204","message":"thất bại"}';
+        }
     }
 }

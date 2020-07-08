@@ -5,9 +5,9 @@ class BookCategory extends My_Admin_Controller
     {
         parent::__construct();
         $this->__LAYOUT__ = "main";
-        $this->load->model("BookCategory_model", "PC");
+        $this->load->model("BookCategory_model", "repo");
     }
-    
+
     public function getAllCategory()
     {
         if (!function_exists("BookCategoryMap")) {
@@ -20,75 +20,89 @@ class BookCategory extends My_Admin_Controller
                 ];
             }
         }
-        $res = $this->PC->getAllShort();
+        $res = $this->repo->getAllShort();
         echo json_encode(array_map("BookCategoryMap", $res));
-    }
-    public function getAll()
-    {
-        $res = $this->PC->get();
-        echo json_encode(["data" => $res]);
     }
     public function getById($id)
     {
         if (!isset($id)) return;
-        $data = $this->PC->getById($id);
+        $data = $this->repo->getById($id);
         if ($data == NULL)
             return $this->response($this->json_data(0, "Thể loại không tồn tại"));
         return $this->response($this->json_data(1, "Tìm thấy", $data));
     }
     public function index()
     {
-        $this->view("index");
+        $data['categories'] = $this->repo->get();
+
+        $this->view("index", $data);
     }
     public function add()
     {
-        $this->view("add");
-    }
-    public function createBookCategory()
-    {
-        if (empty($this->input->post())) return new ErrorException("Not Found", "0");
+        $data = [];
+        if (!empty($this->input->post())) {
+            $res = $this->_add();
+            if (empty($res)) redirect(base_url("Admin/BookCategory"));
+            else $data['error'] = $res;
+        }
 
-        $bookC = [
-            "name" => $this->input->post("name"),
-            "description" => $this->input->post("description"),
-            "seo" => $this->input->post("seo")
+        return $this->view("add", $data);
+    }
+
+    private function _add()
+    {
+        $error = [];
+        $id = ObjectId();
+
+        $category = [
+            "Id" => $id,
+            "Name" => $this->input->post("Name"),
+            "Seo" => $this->input->post("Seo")
         ];
 
-        if ($bookC['name'] == "" || $bookC['description'] == "" || $bookC['seo'] == "")
-            return $this->response($this->json_data(0, "Thêm loại sản phẩm thất bại"));
+        $res = $this->repo->create($category);
 
-        try {
-            $res = $this->PC->create($bookC);
+        if ($res == 0) $error['data'] = $category;
 
-            return $this->response($this->json_data(1, "Thêm loại sản phẩm thành công", ["returnUrl" => base_url("Admin/BookCategory")]));
-        } catch (Exception $e) {
-            return $this->response($this->json_data(0, "Thêm loại sản phẩm thất bại"));
-        }
+        return $error;
     }
     public function edit($id)
     {
-        if (!isset($id)) redirect("Admin/BookCategory");
-        $this->view("edit", ['id' => $id]);
+        $data['category'] = $this->repo->get($id);
+
+        if (empty($data['category']))
+            redirect(base_url("Admin/BookCategory"));
+
+        if (!empty($this->input->post())) {
+            $res = $this->_edit($id);
+            if (empty($res)) redirect(base_url("Admin/BookCategory")); // added
+            else $data['error'] = $res;
+        }
+
+        return $this->view("edit", $data);
     }
-    public function updateBookCategory($id)
+    private function _edit($id)
     {
-        if (!isset($id)) return;
-        if (empty($this->input->post())) return new ErrorException("Not Found", "0");
+        $error = [];
 
-        $book = ($this->input->post());
+        $book = [
+            "Name" => $this->input->post("Name"),
+            "Seo" => $this->input->post("Seo")
+        ];
 
-        $res = ($this->PC->update($id, $book));
+        $res = $this->repo->update($id, $book);
 
-        if ($res == NULL)
-            return $this->response($this->json_data(0, "Cập nhật loại sản phẩm thất bại"));
-
-        return $this->response($this->json_data(1, "Cập nhật loại sản phẩm thành công", ["returnUrl" => base_url("Admin/BookCategory")]));
+        return $error;
     }
     public function delete($id)
     {
-        if (!isset($id)) return;
-        if ($this->PC->delete($id) != NULL)
-            return  $this->response($this->json_data(1, "Xóa loại sản phẩm thành công"));
-        else $this->response($this->json_data(0, "Xóa loại sản phẩm thất bại"));
+        $model = $this->repo->get($id);
+
+        if (isset($model['Id'])) {
+            $res = $this->repo->delete($id);
+            echo '{"exitcode":"200","message":"thành công"}';
+        } else {
+            echo '{"exitcode":"204","message":"thất bại"}';
+        }
     }
 }

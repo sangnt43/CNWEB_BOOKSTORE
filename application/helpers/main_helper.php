@@ -105,12 +105,14 @@ if (!function_exists("uploadFile")) {
 
         $config['upload_path']          = $path;
         $config['overwrite']            = TRUE;
+
         if (!empty($filename))
             $config['file_name']        = $filename;
-        $config['allowed_types']        = 'gif|jpg|png|jpeg|webp';
+
+        $config['allowed_types']        = 'gif|jpg|png|jpeg';
         $config['max_size']             = 5 * 1024;
-        $config['max_width']            = 1024;
-        $config['max_height']           = 768;
+        $config['max_width']            = $width;
+        $config['max_height']           = $height;
 
         $ci->load->library('upload', $config);
 

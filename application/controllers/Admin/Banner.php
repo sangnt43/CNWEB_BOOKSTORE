@@ -88,6 +88,8 @@ class Banner extends My_Admin_Controller
 
         $res = $this->repo->update($id, $banner);
 
+        if($res == 0) $error['data'] = $banner;
+
         return $error;
     }
 
@@ -111,7 +113,7 @@ class Banner extends My_Admin_Controller
 
         if (isset($model['Id'])) {
             $res = $this->repo->update($id, ['IsActive' => $this->input->post('IsActive')]);
-            if (!empty($res)) {
+            if ($res != 0) {
                 echo '{"exitcode":"200","message":"thành công"}';
                 return;
             }
