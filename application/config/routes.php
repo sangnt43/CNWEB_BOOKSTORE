@@ -28,14 +28,14 @@ $route['checkout'] = function () {
 
 $route['search'] = "Shop/search";
 
-$route['about'] = "Infomation/about";
-$route['faq'] = "Infomation/faq";
-$route['policy'] = "Infomation/policy";
+$route['about'] = "Information/about";
+$route['faq'] = "Information/faq";
+$route['policy'] = "Information/policy";
 $route['contact']['post'] = "Home/Contact";
-$route['contact']['get'] = "Infomation/contact";
+$route['contact']['get'] = "Information/contact";
 
-$route['shipping-return'] = "Infomation/shippingReturn";
-$route['terms-condition'] = "Infomation/termsCondition";
+$route['shipping-return'] = "Information/shippingReturn";
+$route['terms-condition'] = "Information/termsCondition";
 
 $route['all'] = "Shop/getAll";
 $route['((?!([Aa]dmin))[^\/]+)'] = "Shop/category/$1";

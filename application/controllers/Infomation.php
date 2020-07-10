@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Infomation extends My_Controller
+class Information extends My_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->__LAYOUT__ = "main";
 
-        $this->load->model("Infomation_Model", "repo");
+        $this->load->model("Information_Model", "repo");
 
         $this->clear_breadcrum();
     }

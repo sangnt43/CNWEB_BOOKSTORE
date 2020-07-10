@@ -1,6 +1,6 @@
 <form class="card" @submit="onSubmit" method="POST" enctype="multipart/form-data">
     <div class="card-body">
-        <h4 class="card-title">Thêm Banner</h4>
+        <h4 class="card-title">Chỉnh sửa Banner</h4>
         <hr>
         <div class="form-row">
             <div class="col-sm-12">

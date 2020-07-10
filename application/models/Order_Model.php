@@ -29,6 +29,14 @@ class Order_Model extends My_Model
             ->join("order_statues", "order_statues.Id = orders.StatusId")
             ->get($this->table)->result_array();
     }
+    public function getStatus($id)
+    {
+        return $this->db->get_where("order_statues", ['Id' => $id])->row_array();
+    }
+    public function getAllStatus()
+    {
+        return $this->db->order_by("StatusCode")->get("order_statues")->result_array();
+    }
     public function save($data)
     {
         $this->db->insert($this->table, $data);

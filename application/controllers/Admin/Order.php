@@ -9,11 +9,8 @@ class Order extends My_Admin_Controller
     }
     public function index()
     {
-        $this->view("index");
-    }
-    public function getAll()
-    {
-        $this->response(["data" => $this->order->getAllShort()]);
+        $data['orders'] =  $this->order->getAllShort();
+        $this->view("index", $data);
     }
     public function getById($id)
     {
@@ -34,31 +31,18 @@ class Order extends My_Admin_Controller
             return  $this->response($this->json_data(1, "Xóa đơn hàng thành công"));
         else $this->response($this->json_data(0, "Xóa đơn hàng thất bại"));
     }
-    public function changeStatus()
+    public function getAllStatus()
     {
-        if (empty($this->input->post())) return new ErrorException("Not Found", "0");
-        $data = [
-            "code" => $this->input->post("statusId"),
-            "title" => $this->input->post("statusText")
-        ];
-        if ($this->order->changeStatus($this->input->post("id"), $data) != NULL) {
-            if ($data['code'] == 13) {
-                $this->load->model('Product_model');
-                $params = $this->order->getAllProductWithQuantity($this->input->post("id"));
-                $this->Product_model->updateQuantity($params);
-            }
-            return $this->response($this->json_data(1, "Cập nhật trạng thái thành công"));
-        } else $this->response($this->json_data(0, "Cập nhật trạng thái thất bại"));
+        echo json_encode($this->order->getAllStatus());
     }
-    public function changeQuick()
+    public function changeStatus($orderId, $statusId)
     {
-        if (empty($this->input->post())) return new ErrorException("Not Found", "0");
-        $data = [
-            "idGhn" => $this->input->post("idGhn")
-        ];
-        $res = $this->order->changeQuick($this->input->post("id"), $data);
-        if ($res != NULL)
-            return  $this->response($this->json_data(1, "Cập nhật trạng thái thành công", ['response' => $res]));
-        else $this->response($this->json_data(0, "Cập nhật trạng thái thất bại"));
+        $res = $this->order->update($orderId, [
+            "StatusId" => $statusId
+        ]);
+        $status = $this->order->getStatus($statusId);
+        if ($res != 0) {
+            echo json_encode(['exitcode' => 200, "status" => $status]);
+        } else echo json_encode(['exitcode' => 204]);
     }
 }

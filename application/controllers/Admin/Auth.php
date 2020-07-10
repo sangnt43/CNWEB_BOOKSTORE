@@ -32,8 +32,7 @@ class Auth extends My_Controller
             $data["message"] = "Thất bại";
         } else {
             save($res, true);
-
-            redirect(base_url("Admin/Order/index"));
+            redirect(base_url("Admin/Order"));
         }
 
         redirect(base_url("Admin/login"));

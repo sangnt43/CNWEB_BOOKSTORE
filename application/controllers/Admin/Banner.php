@@ -19,7 +19,7 @@ class Banner extends My_Admin_Controller
         $data = [];
         if (!empty($this->input->post())) {
             $res = $this->_add();
-            if (empty($res)) redirect(base_url("Admin/Banner/index"));
+            if (empty($res)) redirect(base_url("Admin/Banner"));
             else $data['error'] = $res;
         }
 
@@ -56,12 +56,12 @@ class Banner extends My_Admin_Controller
         $data['banner'] = $this->repo->get($id);
 
         if (empty($data['banner']))
-            redirect(base_url("Admin/Banner/index"));
+            redirect(base_url("Admin/Banner"));
 
         if (!empty($this->input->post())) {
             $res = $this->_edit($id);
 
-            if (empty($res)) redirect(base_url("Admin/Banner/index")); // added
+            if (empty($res)) redirect(base_url("Admin/Banner")); // added
             else $data['error'] = $res;
         }
 

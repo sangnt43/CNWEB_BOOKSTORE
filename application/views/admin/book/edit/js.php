@@ -1,8 +1,6 @@
 <link rel="stylesheet" href="<?= base_url() ?>public/css/custom.css">
-<link rel="stylesheet" type="text/css" href="<?= base_url("public/libs/suggestags/amsify.suggestags.css") ?>">
 <script src="<?= base_url() ?>public/libs/ckeditor/ckeditor.js"></script>
 <script src="<?= base_url() ?>public/vue/v-select.js"></script>
-<script src="<?= base_url() ?>public/ckfinder/ckfinder.js"></script>
 
 <script>
     function popupWindowOptions() {
