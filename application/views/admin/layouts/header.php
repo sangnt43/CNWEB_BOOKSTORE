@@ -21,6 +21,10 @@
   <script src="<?= base_url() ?>public/vendors/vue.min.js"></script>
 
   <style>
+    #listbox .bootstrap-duallistbox-container .form-control option {
+      padding: 10px;
+    }
+
     .dataTables_wrapper .dt-buttons a.dt-button {
       background-color: #00b0e4 !important;
     }

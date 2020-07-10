@@ -31,6 +31,7 @@ class Auth extends My_Controller
             $data["success"] = "0";
             $data["message"] = "Thất bại";
         } else {
+            $res["Roles"] = json_decode($res["Roles"], true);
             save($res, true);
             redirect(base_url("Admin/Order"));
         }

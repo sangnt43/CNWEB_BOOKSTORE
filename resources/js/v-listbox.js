@@ -1,0 +1,1 @@
+Vue.component('v-listbox', require('./components/v-listbox.vue').default);

@@ -11,4 +11,5 @@ mix.setPublicPath('../');
 // mix.js('js/pagination.js', '../public/vue/pagination.js');
 // mix.js('js/shop-search.js', '../public/vue/shop-search.js');
 // mix.js('js/v-model.js', '../public/vue/v-model.js');
-mix.js('js/v-select.js', '../public/vue/v-select.js');
+// mix.js('js/v-select.js', '../public/vue/v-select.js');
+mix.js('js/v-listbox.js', '../public/vue/v-listbox.js');
